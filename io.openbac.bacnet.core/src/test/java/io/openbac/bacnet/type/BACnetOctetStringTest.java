@@ -49,7 +49,7 @@ public class BACnetOctetStringTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetOctetString obj = (BACnetOctetString) BACnetPrimitive.createPrimitive(BACnetOctetString.class, buf);
+			BACnetOctetString obj = BACnetPrimitive.createPrimitive(BACnetOctetString.class, buf);
 
 			System.out.println(obj.toDebugString());
 			System.out.println(obj.toString());

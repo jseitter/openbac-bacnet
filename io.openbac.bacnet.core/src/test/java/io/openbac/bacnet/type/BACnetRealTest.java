@@ -16,8 +16,6 @@ import io.openbac.bacnet.type.primitive.BACnetReal;
 
 public class BACnetRealTest extends BACnetTest {
 
-
-
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		// get the testdata
@@ -35,9 +33,8 @@ public class BACnetRealTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetReal obj = (BACnetReal) BACnetPrimitive
-					.createPrimitive(BACnetReal.class, buf);
-			
+			BACnetReal obj = BACnetPrimitive.createPrimitive(BACnetReal.class, buf);
+
 			System.out.println(obj.toDebugString());
 			System.out.println(obj.getValue());
 			Assert.assertEquals(Float.valueOf(props.get("value")), Float.valueOf(obj.getValue()));

@@ -47,7 +47,7 @@ public class BACnetCharacterStringTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetCharacterString obj = (BACnetCharacterString) BACnetPrimitive.createPrimitive(BACnetCharacterString.class, buf);
+			BACnetCharacterString obj = BACnetPrimitive.createPrimitive(BACnetCharacterString.class, buf);
 
 			System.out.println(obj.toDebugString());
 			System.out.println(obj.toString());

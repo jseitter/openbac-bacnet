@@ -46,7 +46,7 @@ public class BACnetDateTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetDate obj = (BACnetDate) BACnetPrimitive.createPrimitive(BACnetDate.class, buf);
+			BACnetDate obj = BACnetPrimitive.createPrimitive(BACnetDate.class, buf);
 
 			System.out.println(obj.toDebugString());
 			System.out.println("value: " + obj.toString());

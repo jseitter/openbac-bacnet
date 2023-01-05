@@ -16,8 +16,6 @@ import io.openbac.bacnet.type.primitive.BACnetSignedInteger;
 
 public class BACnetSignedIntegerTest extends BACnetTest {
 
-
-
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		// get the testdata
@@ -35,9 +33,8 @@ public class BACnetSignedIntegerTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetSignedInteger obj = (BACnetSignedInteger) BACnetPrimitive
-					.createPrimitive(BACnetSignedInteger.class, buf);
-			
+			BACnetSignedInteger obj = BACnetPrimitive.createPrimitive(BACnetSignedInteger.class, buf);
+
 			System.out.println(obj.toDebugString());
 			System.out.println(obj.getValue());
 			Assert.assertEquals(Long.decode(props.get("value")), Long.valueOf(obj.getValue()));

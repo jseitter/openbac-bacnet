@@ -46,18 +46,18 @@ public class BACnetBitStringTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetBitString bitstring = (BACnetBitString) BACnetPrimitive.createPrimitive(BACnetBitString.class, buf);
+			BACnetBitString obj = BACnetPrimitive.createPrimitive(BACnetBitString.class, buf);
 
-			System.out.println(bitstring.toDebugString());
-			System.out.println("value: " + bitstring.toString());
+			System.out.println(obj.toDebugString());
+			System.out.println("value: " + obj.toString());
 
 			if (props.get("class").equals("true"))
-				Assert.assertTrue(bitstring.tagClass);
+				Assert.assertTrue(obj.tagClass);
 			if (props.get("class").equals("false"))
-				Assert.assertFalse(bitstring.tagClass);
+				Assert.assertFalse(obj.tagClass);
 
 			
-			Assert.assertEquals(Integer.valueOf(bitstring.tagNumber), Integer.decode(props.get("tag")));
+			Assert.assertEquals(Integer.valueOf(obj.tagNumber), Integer.decode(props.get("tag")));
 		}
 	}
 	

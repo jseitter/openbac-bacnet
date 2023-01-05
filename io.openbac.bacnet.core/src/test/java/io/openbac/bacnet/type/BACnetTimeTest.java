@@ -23,8 +23,6 @@ import io.openbac.bacnet.type.primitive.BACnetTime;
  */
 public class BACnetTimeTest extends BACnetTest {
 
-	
-
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -40,13 +38,13 @@ public class BACnetTimeTest extends BACnetTest {
 	public void testDecode() throws BACnetParseException {
 
 		int size = loader.resultBuffers.size();
-		System.out.println("will run "+size+" tests");
+		System.out.println("will run " + size + " tests");
 		for (int i = 0; i < size; i++) {
-			System.out.println("------------ running case # "+i+" -------------");
+			System.out.println("------------ running case # " + i + " -------------");
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetTime time = (BACnetTime) BACnetPrimitive.createPrimitive(BACnetTime.class, buf);
+			BACnetTime time = BACnetPrimitive.createPrimitive(BACnetTime.class, buf);
 
 			System.out.println(time.toDebugString());
 			System.out.println("value: " + time.toString());
@@ -56,7 +54,6 @@ public class BACnetTimeTest extends BACnetTest {
 			if (props.get("class").equals("false"))
 				Assert.assertFalse(time.tagClass);
 
-			
 			Assert.assertEquals(Integer.valueOf(time.tagNumber), Integer.decode(props.get("tag")));
 			Assert.assertEquals(Integer.valueOf(time.getHour()), Integer.decode(props.get("hour")));
 			Assert.assertEquals(Integer.valueOf(time.getMinute()), Integer.decode(props.get("minute")));
@@ -64,10 +61,9 @@ public class BACnetTimeTest extends BACnetTest {
 			Assert.assertEquals(Integer.valueOf(time.getHundredth()), Integer.decode(props.get("hundredth")));
 		}
 	}
-	
 
 	@Test
 	public void testEncode() {
-	
+
 	}
 }

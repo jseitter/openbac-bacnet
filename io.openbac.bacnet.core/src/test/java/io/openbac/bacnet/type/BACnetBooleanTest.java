@@ -46,7 +46,7 @@ public class BACnetBooleanTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetBoolean obj = (BACnetBoolean) BACnetPrimitive.createPrimitive(BACnetBoolean.class, buf);
+			BACnetBoolean obj = BACnetPrimitive.createPrimitive(BACnetBoolean.class, buf);
 
 			System.out.println(obj.toDebugString());
 			System.out.println("value: " + obj.getValue());

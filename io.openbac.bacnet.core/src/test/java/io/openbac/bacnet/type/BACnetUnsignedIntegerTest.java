@@ -16,8 +16,6 @@ import io.openbac.bacnet.type.primitive.BACnetUnsignedInteger;
 
 public class BACnetUnsignedIntegerTest extends BACnetTest {
 
-
-
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		// get the testdata
@@ -35,9 +33,8 @@ public class BACnetUnsignedIntegerTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetUnsignedInteger uint = (BACnetUnsignedInteger) BACnetPrimitive
-					.createPrimitive(BACnetUnsignedInteger.class, buf);
-			
+			BACnetUnsignedInteger uint = BACnetPrimitive.createPrimitive(BACnetUnsignedInteger.class, buf);
+
 			System.out.println(uint.toDebugString());
 			System.out.println(uint.getValue());
 			Assert.assertEquals(Long.decode(props.get("value")), Long.valueOf(uint.getValue()));

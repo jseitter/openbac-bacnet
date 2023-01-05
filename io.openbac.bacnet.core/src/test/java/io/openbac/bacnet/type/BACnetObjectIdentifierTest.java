@@ -47,7 +47,7 @@ public class BACnetObjectIdentifierTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetObjectIdentifier obj = (BACnetObjectIdentifier) BACnetPrimitive.createPrimitive(BACnetObjectIdentifier.class, buf);
+			BACnetObjectIdentifier obj = BACnetPrimitive.createPrimitive(BACnetObjectIdentifier.class, buf);
 
 			System.out.println(obj.toDebugString());
 			System.out.println("type: " + obj.getObjectType().name());

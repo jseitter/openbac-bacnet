@@ -65,32 +65,32 @@ public abstract class BACnetPrimitive extends BACnetEncodable {
 
         }
 
-        public static BACnetPrimitive createPrimitive(Class<? extends BACnetEncodable> clazz, ByteBuf data) throws BACnetParseException {
+        public static <T extends BACnetPrimitive> T createPrimitive(Class<? extends BACnetEncodable> clazz, ByteBuf data) throws BACnetParseException {
                 
                 if (clazz == BACnetNull.class) {
-                        return new BACnetNull();
+                        return (T) new BACnetNull();
                 } else if (clazz == BACnetBoolean.class) {
-                        return new BACnetBoolean(data);
+                        return (T) new BACnetBoolean(data);
                 } else if (clazz == BACnetUnsignedInteger.class) {
-                        return new BACnetUnsignedInteger(data);
+                        return (T) new BACnetUnsignedInteger(data);
                 } else if (clazz == BACnetSignedInteger.class) {
-                        return new BACnetSignedInteger(data);
+                        return (T) new BACnetSignedInteger(data);
                 } else if (clazz == BACnetReal.class) {
-                        return new BACnetReal(data);
+                        return (T) new BACnetReal(data);
                 } else if (clazz == BACnetDouble.class) {
-                        return new BACnetDouble(data);
+                        return (T) new BACnetDouble(data);
                 } else if (clazz == BACnetOctetString.class) {
-                        return new BACnetOctetString(data);
+                        return (T) new BACnetOctetString(data);
                 } else if (clazz == BACnetCharacterString.class) {
-                        return new BACnetCharacterString(data);
+                        return (T) new BACnetCharacterString(data);
                 } else if (clazz == BACnetBitString.class) {
-                        return new BACnetBitString(data);
+                        return (T) new BACnetBitString(data);
                 } else if (clazz == BACnetDate.class) {
-                        return new BACnetDate(data);
+                        return (T) new BACnetDate(data);
                 } else if (clazz == BACnetTime.class) {
-                        return new BACnetTime(data);
+                        return (T) new BACnetTime(data);
                 } else if (clazz == BACnetObjectIdentifier.class) {
-                        return new BACnetObjectIdentifier(data);
+                        return (T) new BACnetObjectIdentifier(data);
                 }
                 
                 return null;

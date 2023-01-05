@@ -35,7 +35,7 @@ public class BACnetDoubleTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 
-			BACnetDouble obj = (BACnetDouble) BACnetPrimitive
+			BACnetDouble obj =  BACnetPrimitive
 					.createPrimitive(BACnetDouble.class, buf);
 			
 			System.out.println(obj.toDebugString());
