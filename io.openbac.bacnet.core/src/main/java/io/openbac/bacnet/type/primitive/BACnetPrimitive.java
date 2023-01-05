@@ -65,7 +65,7 @@ public abstract class BACnetPrimitive extends BACnetEncodable {
 
         }
 
-        public static <T extends BACnetPrimitive> T createPrimitive(Class<? extends BACnetEncodable> clazz, ByteBuf data) throws BACnetParseException {
+        public static <T extends BACnetPrimitive> T createPrimitive(Class<? extends BACnetEncodable> clazz, final ByteBuf data) throws BACnetParseException {
                 
                 if (clazz == BACnetNull.class) {
                         return (T) new BACnetNull();
