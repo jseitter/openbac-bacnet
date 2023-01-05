@@ -13,7 +13,7 @@ import io.openbac.bacnet.type.primitive.BACnetUnsignedInteger;
  * @author Joerg Seitter
  *
  */
-public class WhoIsService {
+public class WhoIsService extends BACnetUnconfirmedService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WhoIsService.class);
 
@@ -26,7 +26,13 @@ public class WhoIsService {
 	 */
 	private BACnetUnsignedInteger deviceInstanceRangeHighLimit = null;
 
-	public WhoIsService(final ByteBuf apdu) throws BACnetParseException {
+	/**
+	 * Constrcutor decodes service details.
+	 * It is expected that the service choice is evaluated before
+	 * @param apdu
+	 * @throws BACnetParseException
+	 */
+	public WhoIsService(final ByteBuf apdu)  throws BACnetParseException {
 
 		// check if the WhoIS Request has parameters
 		if (apdu.readableBytes() > 0) {
@@ -36,16 +42,23 @@ public class WhoIsService {
 			LOG.debug("expecting unsigned integer for deviceInstanceRangeHighLimit");
 			deviceInstanceRangeHighLimit = BACnetPrimitive.createPrimitive(BACnetUnsignedInteger.class, apdu);
 		}
-		// if not the complete range is addressed and everybody who gets
-		// this request should reply with iam
-		if (deviceInstanceRangeLowLimit == null || deviceInstanceRangeHighLimit == null) {
-			deviceInstanceRangeLowLimit = new BACnetUnsignedInteger(0);
-			deviceInstanceRangeHighLimit = new BACnetUnsignedInteger(4294967296l);
-		}
 		LOG.debug(this.toString());
 
 	}
-
+	/**
+	 * Encodes the service choice and service details.
+	 * @param buf the buffer to write to
+	 */
+	public void encode(final ByteBuf buf) {
+		buf.writeByte(BACnetUnconfirmedService.Choice.WHO_IS.serviceChoice);
+		// if both are set then encode the fields to the buffer
+		if (deviceInstanceRangeLowLimit == null || deviceInstanceRangeHighLimit == null) {
+			deviceInstanceRangeLowLimit.encodeApplication(buf);
+			deviceInstanceRangeHighLimit.encodeApplication(buf);
+		}
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "WhoIsService{" + "deviceInstanceRangeLowLimit=" + deviceInstanceRangeLowLimit

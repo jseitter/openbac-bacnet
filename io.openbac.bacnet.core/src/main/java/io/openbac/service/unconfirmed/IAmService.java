@@ -12,7 +12,7 @@ import io.openbac.bacnet.type.primitive.BACnetObjectIdentifier;
 import io.openbac.bacnet.type.primitive.BACnetPrimitive;
 import io.openbac.bacnet.type.primitive.BACnetUnsignedInteger;
 
-public class IAmService {
+public class IAmService extends BACnetUnconfirmedService{
 
 	private static final Logger LOG = LoggerFactory.getLogger(IAmService.class);
 
@@ -117,10 +117,18 @@ public class IAmService {
 		this.vendorID = vendorID;
 	}
 
-	public void serializeToBuffer(ByteBuf buf) {
-
+	/**
+	 * Encodes the service choice and service details.
+	 * @param buf the buffer to write to
+	 */
+	public void encode(final ByteBuf buf) {
+		buf.writeByte(BACnetUnconfirmedService.Choice.I_AM.serviceChoice);
+		objectIdentifier.encodeApplication(buf);
+		maxAPDULengthAccepted.encodeApplication(buf);
+		segmentationSupported.encodeApplication(buf);
+		vendorID.encodeApplication(buf);
 	}
-
+	
 	@Override
 	public String toString() {
 		return "IAmService{" + "objectIdentifier=" + objectIdentifier + ", maxAPDULengthAccepted="
