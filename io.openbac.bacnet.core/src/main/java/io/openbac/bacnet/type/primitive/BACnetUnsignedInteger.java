@@ -37,14 +37,6 @@ public class BACnetUnsignedInteger extends BACnetPrimitive {
 		decodeTag();
 
 		if (tagLVT > 0) {
-			// smaller integers with up to 3 bytes length
-			// resort byte order
-//			byte[] newData = new byte[data.length];
-//			for (int i = 0; i < data.length; i++) {
-//				newData[data.length - i - 1] = data[i];
-//			}
-//			data = newData;
-
 			if (tagLVT == 1) {
 				this.valueInteger = buf.readUnsignedByte();
 			} else if (tagLVT == 2) {
