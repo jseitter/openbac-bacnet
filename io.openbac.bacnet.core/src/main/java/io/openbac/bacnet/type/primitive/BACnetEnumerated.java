@@ -12,7 +12,7 @@ public class BACnetEnumerated extends BACnetPrimitive {
 		}
 		this.valueInteger = valueInteger;
 	}
-
+	
 	public BACnetEnumerated(final ByteBuf data) {
 		buf = data;
 		decodeTag();
@@ -32,10 +32,11 @@ public class BACnetEnumerated extends BACnetPrimitive {
 
 	}
 
-	public int getValue() {
+	public int intValue() {
 		return (int) valueInteger;
 	}
 
+	
 	@Override
 	public void encodeApplication(ByteBuf data) {
 		// TODO Auto-generated method stub
