@@ -1,0 +1,49 @@
+plugins {
+    id 'java-library'
+    id "io.openbac.codegen"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+//project.tasks.generate.dependsOn(
+
+dependencies {
+	
+	
+	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+	
+	// https://mvnrepository.com/artifact/io.netty/netty-buffer
+	implementation group: 'io.netty', name: 'netty-buffer', version: '4.1.86.Final'
+	implementation group: 'io.netty', name: 'netty-handler', version: '4.1.86.Final'
+	
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+	
+
+	testImplementation 'junit:junit:4.11'
+	 // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    testImplementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
+		
+}
+
+//task generateEnumeratedSources(type: JavaExec) {
+//	main = 'io.openbac.generators.EnumeratedGenerator'
+//	classpath=sourceSets.generator.runtimeClasspath
+//}
+
+//task generateComplexTypeSources(type: JavaExec) {
+//	main = 'io.openbac.generators.ComplexTypeGenerator'
+//	classpath=sourceSets.generator.runtimeClasspath
+//}
+
+//generateEnumeratedSources.dependsOn(generatorClasses)
+//generateComplexTypeSources.dependsOn(generatorClasses)
+//compileJava.dependsOn(generateEnumeratedSources)
+//compileJava.dependsOn(generateComplexTypeSources)
+
+

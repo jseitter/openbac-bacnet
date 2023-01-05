@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bacnetTypes>
+	<primitiveType name="BACnetObjectIdentifier"/>
+	<primitiveType name="BOOLEAN"/>
+	<primitiveType name="Unsigned32"/>
+	
+	<complexType name="BACnetObjectPropertyReference">
+		<sequence>
+			<element name="objectIdentifier" type="BACnetObjectIdentifier" contextId="0" optional="false"/>
+			<element name="propertyIdentifier" type="BACnetPropertyIdentifier" contextId="1" optional="false"/>
+			<element name="propertyArrayIndex" type="Unsigned" contextId="2" optional="true"/>
+		</sequence>	
+	</complexType>
+	<complexType name="BACnetRecipient">
+		<choice>
+			<element name="device" type="BACnetObjectIdentifier" contextId="0" optional="false"/>
+			<element name="address" type="BACnetAddress" contextId="1" optional="false"/>
+		</choice>
+	</complexType>
+	<complexType name="BACnetRecipientProcess">
+		<sequence>
+		<element name="recipient" type="BACnetRecipient" contextId="0" optional="false"/>
+		<element name="processIdentifier" type="Unsigned32" contextId="1" optional="false"/>
+		</sequence>
+	</complexType>
+	<complexType name="BACnetCOVSubscription">
+		<sequence>
+			<element name="recipient" type="BACnetRecipientProcess" contextId="0" optional="false"/>
+			<element name="monitoredPropertyReference" type="BACnetObjectPropertyReference" contextId="1" optional="false"/>
+			<element name="issueConfirmedNotifications" type="BOOLEAN" contextId="2" optional="false"/>
+			<element name="timeRemaining" type="Unsigned" contextId="3" optional="false"/>
+			<element name="covIncrement" type="REAL" contextId="4" optional="true"/>
+		</sequence>
+	</complexType>
+</bacnetTypes>

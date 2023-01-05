@@ -1,0 +1,4 @@
+rootProject.name='io.openbac.bacnet'
+include 'io.openbac.bacnet.core'
+#include 'io.openbac.bacnet.client'
+#include 'io.openbac.bacnet.server'
