@@ -13,20 +13,22 @@ dependencies {
 	
 	
 	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-	implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
 	
 	// https://mvnrepository.com/artifact/io.netty/netty-buffer
 	implementation group: 'io.netty', name: 'netty-buffer', version: '4.1.86.Final'
 	implementation group: 'io.netty', name: 'netty-handler', version: '4.1.86.Final'
 	
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 	
 
 	testImplementation 'junit:junit:4.11'
 	// https://mvnrepository.com/artifact/commons-codec/commons-codec
-        testImplementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
-		
+    testImplementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
+	// https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.5'
+	
 }
 
 compileJava {
