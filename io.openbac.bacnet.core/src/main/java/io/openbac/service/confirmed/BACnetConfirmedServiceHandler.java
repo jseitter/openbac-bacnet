@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.openbac.net.apdu.BACnetAPDUHandler;
-import io.openbac.net.apdu.BACnetConfirmedRequestAPDU;
+import io.openbac.bacnet.net.apdu.BACnetAPDUHandler;
+import io.openbac.bacnet.net.apdu.BACnetConfirmedRequestAPDU;
 
 public class BACnetConfirmedServiceHandler extends ChannelInboundHandlerAdapter {
 
