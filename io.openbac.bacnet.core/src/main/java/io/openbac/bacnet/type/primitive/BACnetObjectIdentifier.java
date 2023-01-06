@@ -71,7 +71,7 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
          * serialize the object into the given ByteBuffer
          */
         @Override
-		public void encode(final ByteBuf buf, int contextId) {
+		public void encode(final ByteBuf data, int contextId) {
 		
         	TagUtils.encodeTagIdAndLength(buf, contextId, 4);
         	
@@ -84,7 +84,7 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
         	result[1] = (byte) (result[1] | (byte)((objType & 0x03) << 6 ));
         	result[0] = (byte)((objType & 0x3fc ) >> 2);
         	
-        	buf.writeBytes(result);
+        	data.writeBytes(result);
         					        					
 		}
 
@@ -101,7 +101,7 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
         	result[1] = (byte) (result[1] | (byte)((objType & 0x03) << 6 ));
         	result[0] = (byte)((objType & 0x3fc ) >> 2);
         	
-        	buf.writeBytes(result);
+        	data.writeBytes(result);
 		}
 		
         @Override

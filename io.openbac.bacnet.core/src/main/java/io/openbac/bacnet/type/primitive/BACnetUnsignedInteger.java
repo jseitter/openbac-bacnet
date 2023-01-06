@@ -100,14 +100,14 @@ public class BACnetUnsignedInteger extends BACnetPrimitive {
 		TagUtils.encodeApplicationTagAndLength(data, BACnetPrimitive.Type.UNSIGNED_INTEGER.type, length);
 		switch (length) {
 		case 1:
-			buf.writeByte((int) (valueInteger & 0xff));
+			data.writeByte((int) (valueInteger & 0xff));
 			break;
 
 		case 2:
-			buf.writeShort((int) (valueInteger & 0xffff));
+			data.writeShort((int) (valueInteger & 0xffff));
 			break;
 		case 4:
-			buf.writeInt((int) (valueInteger & 0xffffffff));
+			data.writeInt((int) (valueInteger & 0xffffffff));
 			break;
 		}
 
