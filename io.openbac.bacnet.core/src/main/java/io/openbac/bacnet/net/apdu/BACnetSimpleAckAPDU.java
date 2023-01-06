@@ -1,17 +1,22 @@
-package io.openbac.net.apdu;
+package io.openbac.bacnet.net.apdu;
 
-import io.openbac.net.npdu.BACnetNPDU;
+import io.netty.buffer.ByteBuf;
 
 public class BACnetSimpleAckAPDU extends BACnetAPDU {
 
-    public BACnetSimpleAckAPDU(BACnetNPDU npdu) {
-		super(npdu);
-		// TODO Auto-generated constructor stub
+    public BACnetSimpleAckAPDU(final ByteBuf buf) {
+    	this.buffer=buf;
 	}
 
 	@Override
     public PDUType getPDUType() {
         return PDUType.SIMPLE_ACK;
     }
+
+	@Override
+	public void encode(ByteBuf buf) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

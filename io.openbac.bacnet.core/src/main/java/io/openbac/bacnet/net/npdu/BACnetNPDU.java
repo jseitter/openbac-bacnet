@@ -1,4 +1,4 @@
-package io.openbac.net.npdu;
+package io.openbac.bacnet.net.npdu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import io.netty.buffer.ByteBuf;
 import io.openbac.bacnet.exceptions.BACnetNetworkLayerMessageException;
 import io.openbac.bacnet.exceptions.BACnetParseException;
-import io.openbac.net.apdu.BACnetAPDU;
+import io.openbac.bacnet.net.apdu.BACnetAPDU;
 import io.openbac.util.HexUtils;
 
 /**
@@ -29,7 +29,17 @@ public final class BACnetNPDU {
 	 */
 	private BACnetBVLL bvll;
 	
+	public BACnetBVLL getBvll() {
+		return bvll;
+	}
 
+	private BACnetAPDU apdu;
+
+	public BACnetNPDU(BACnetAPDU apdu) {
+		this.priority = 0;
+		this.expectingReply = false;
+		this.apdu=apdu;
+	}
 
 
 	/**
@@ -80,6 +90,8 @@ public final class BACnetNPDU {
 	 * @throws BACnetNetworkLayerMessageException
 	 */
 	protected BACnetNPDU(BACnetBVLL bvll) throws BACnetParseException, BACnetNetworkLayerMessageException {
+		
+		this.bvll = bvll; //store the bvll since it contains the sender address
 		// get the Version field
 		ByteBuf rawNPDU = bvll.getPayload();
 		version = rawNPDU.readByte();
@@ -207,8 +219,20 @@ public final class BACnetNPDU {
 		return (npciControlOctet & 0x0003);
 	}
 
-	public BACnetBVLL getBvll() {
-		return bvll;
+	public void encode(final ByteBuf buf) {	
+		// bacnet protocol version
+		buf.writeByte(version);
+		// write NPCI
+		buf.writeByte(0x20);
+		//dnet
+		buf.writeShort(0xffff);
+		// dlen
+		buf.writeByte(0x00);
+		// hop count
+		buf.writeByte(0xff);
+		// APDU
+		apdu.encode(buf);
+		
 	}
 
 }

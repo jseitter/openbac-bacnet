@@ -1,11 +1,10 @@
-package io.openbac.net.apdu;
+package io.openbac.bacnet.net.apdu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.netty.buffer.ByteBuf;
 import io.openbac.bacnet.exceptions.BACnetParseException;
-import io.openbac.net.npdu.BACnetNPDU;
 import io.openbac.util.HexUtils;
   
 /**
@@ -35,11 +34,9 @@ public class BACnetConfirmedRequestAPDU extends BACnetAPDU {
                 return PDUType.CONFIRMED_REQUEST;
         }
 
-        public BACnetConfirmedRequestAPDU(BACnetNPDU npdu) throws BACnetParseException {
+        public BACnetConfirmedRequestAPDU(final ByteBuf buf) throws BACnetParseException {
 
-        		super(npdu);
-        		ByteBuf rawAPDU = npdu.getPayload();
-                byte apci = rawAPDU.readByte();
+                byte apci = buf.readByte();
                 byte segmentedMessageByte = (byte) ((apci & 0b00001000) >> 3);
                 byte moreFollowsByte = (byte) ((apci & 0b00000100) >> 2);
                 byte segmentedResponseAcceptedByte = (byte) ((apci & 0b00000010) >> 1);
@@ -59,7 +56,7 @@ public class BACnetConfirmedRequestAPDU extends BACnetAPDU {
                 }
                 LOG.debug("segmented response accepted: " + segmentedResponseAccepted);
                 
-                byte segmentConfiguration = rawAPDU.readByte();
+                byte segmentConfiguration = buf.readByte();
                 
                 Byte maxSegmentsAcceptedByte = (byte) ((segmentConfiguration & 0b01110000) >> 4);
                 if (maxSegmentsAcceptedByte == 0b00000000) {
@@ -96,24 +93,24 @@ public class BACnetConfirmedRequestAPDU extends BACnetAPDU {
                 
                 LOG.debug("max segments accepted: " + maxSegmentsAccepted);
                 LOG.debug("max apdu length accepted: " + maxAPDULengthAccepted);
-                invokeID = rawAPDU.readByte();
+                invokeID = buf.readByte();
                 LOG.debug("invoke id: 0x" + HexUtils.convert(invokeID));
                 
                 if (segmentedMessage) {
                         
-                        sequenceNumber = rawAPDU.readByte();
+                        sequenceNumber = buf.readByte();
                         LOG.debug("sequence number: 0x" + HexUtils.convert(sequenceNumber));
-                        proposedWindowSize = rawAPDU.readByte();
+                        proposedWindowSize = buf.readByte();
                         LOG.debug("proposed window size: 0x" + HexUtils.convert(proposedWindowSize));
                         
                 }
                 
-                byte serviceChoiceRaw = rawAPDU.readByte();
+                byte serviceChoiceRaw = buf.readByte();
 //                serviceChoiceType = ConfirmedServiceChoice.getServiceChoiceType(serviceChoiceRaw);
 //                LOG.debug("serviceChoice: 0x" + HexUtils.convert(serviceChoiceRaw) + ": " + serviceChoiceType.name());
 
         		// copy the unprocessed part of the datagram
-        		payload=rawAPDU.slice();
+
 
         }
         
@@ -182,5 +179,11 @@ public class BACnetConfirmedRequestAPDU extends BACnetAPDU {
         public void setProposedWindowSize(byte proposedWindowSize) {
                 this.proposedWindowSize = proposedWindowSize;
         }
+
+		@Override
+		public void encode(ByteBuf buf) {
+			// TODO Auto-generated method stub
+			
+		}
 
 }

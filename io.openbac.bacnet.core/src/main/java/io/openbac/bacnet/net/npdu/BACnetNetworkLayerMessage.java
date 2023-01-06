@@ -1,4 +1,4 @@
-package io.openbac.net.npdu;
+package io.openbac.bacnet.net.npdu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

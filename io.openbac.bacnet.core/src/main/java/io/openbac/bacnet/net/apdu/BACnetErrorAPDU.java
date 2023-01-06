@@ -1,17 +1,22 @@
-package io.openbac.net.apdu;
+package io.openbac.bacnet.net.apdu;
 
-import io.openbac.net.npdu.BACnetNPDU;
+import io.netty.buffer.ByteBuf;
 
 public class BACnetErrorAPDU extends BACnetAPDU {
 
-    public BACnetErrorAPDU(BACnetNPDU npdu) {
-		super(npdu);
-		// TODO Auto-generated constructor stub
+    public BACnetErrorAPDU(final ByteBuf buf) {
+
 	}
 
 	@Override
     public PDUType getPDUType() {
         return PDUType.ERROR;
     }
+
+	@Override
+	public void encode(ByteBuf buf) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

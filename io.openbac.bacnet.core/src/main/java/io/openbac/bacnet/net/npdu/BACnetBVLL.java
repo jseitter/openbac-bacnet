@@ -1,4 +1,4 @@
-package io.openbac.net.npdu;
+package io.openbac.bacnet.net.npdu;
 
 import java.net.InetSocketAddress;
 
@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.openbac.bacnet.exceptions.BACnetNetworkException;
 import io.openbac.bacnet.exceptions.BACnetNetworkLayerMessageException;
 import io.openbac.bacnet.exceptions.BACnetParseException;
@@ -15,14 +16,16 @@ public class BACnetBVLL {
 
         private static final Logger LOG = LoggerFactory.getLogger(BACnetBVLL.class);
        
-        private ByteBuf payload;
+        private ByteBuf buf;
         
         private InetSocketAddress sourceAddress;
         
         public ByteBuf getPayload() {
-			return payload;
+			return buf;
 		}
 
+        private BACnetNPDU npdu;
+        
 		/**
          * 0x81 means BACnet/IP
          */
@@ -102,6 +105,11 @@ public class BACnetBVLL {
 
         }
 
+        public BACnetBVLL(FunctionType fctType, BACnetNPDU npdu) {
+        	this.bvlcFunction=fctType.functionId;
+        	this.npdu=npdu;
+        }
+        
         /**
          * Constructor takes an IoBuffer and decodes the BACnet Virtual Link Layer
          *
@@ -132,7 +140,7 @@ public class BACnetBVLL {
                 LOG.debug("bvllLength " + bvllLength);
 
                 // copy the unparsed section of the packet to rawData
-                payload = rawDatagram.slice();
+                buf = rawDatagram.slice();
                 switch (functionType) {
                         case FORWARDED_NPDU: {
                                 // extract optional ip address data
@@ -206,5 +214,20 @@ public class BACnetBVLL {
 
 		public InetSocketAddress getSourceAddress() {
 			return sourceAddress;
+		}
+		
+		public void encode(final ByteBuf buf) {
+			
+			ByteBuf temp = Unpooled.buffer();
+			npdu.encode(temp);
+			bvllLength=temp.writerIndex()+4; //TODO checken ob index 1 off ist
+			// write the 0x81
+			buf.writeByte(type);
+			// encode function
+			buf.writeByte(bvlcFunction);
+			// encode length
+			buf.writeShort(bvllLength);
+			buf.writeBytes(temp, temp.writerIndex()); //TODO one off check
+			
 		}
 }
