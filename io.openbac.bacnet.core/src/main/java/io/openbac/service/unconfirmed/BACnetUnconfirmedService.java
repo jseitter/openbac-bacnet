@@ -6,16 +6,24 @@ import io.openbac.bacnet.exceptions.BACnetParseException;
 public abstract class BACnetUnconfirmedService {
 
 	public enum Choice {
-		I_AM((byte) 0x00), I_HAVE((byte) 0x01), UNCONFIRMED_COV_NOTIFICATION((byte) 0x02),
-		UNCONFIRMED_EVENT_NOTIFICATION((byte) 0x03), UNCONFIRMED_PRIVATE_TRANSFER((byte) 0x04),
-		UNCONFIRMED_TEXT_MESSAGE((byte) 0x05), TIME_SYNCHRONISATION((byte) 0x06), WHO_HAS((byte) 0x07),
-		WHO_IS((byte) 0x08), UTC_TIME_SYNCHRONISATION((byte) 0x09);
+		I_AM((byte) 0x00,BACnetIAmService.class), 
+		I_HAVE((byte) 0x01,null),
+		UNCONFIRMED_COV_NOTIFICATION((byte) 0x02,null),
+		UNCONFIRMED_EVENT_NOTIFICATION((byte) 0x03,null), 
+		UNCONFIRMED_PRIVATE_TRANSFER((byte) 0x04,null),
+		UNCONFIRMED_TEXT_MESSAGE((byte) 0x05,null), 
+		TIME_SYNCHRONISATION((byte) 0x06,null), 
+		WHO_HAS((byte) 0x07,null),
+		WHO_IS((byte) 0x08,BACnetWhoIsService.class), 
+		UTC_TIME_SYNCHRONISATION((byte) 0x09,null);
 
-		byte serviceChoice;
+		public final byte serviceChoice;
+		public final Class implementationClass;
 
-		Choice(byte serviceChoice) {
+		Choice(byte serviceChoice, Class implementationClass) {
 
 			this.serviceChoice = serviceChoice;
+			this.implementationClass= implementationClass;
 		}
 
 		public static Choice forId(byte serviceChoice) {
@@ -42,17 +50,19 @@ public abstract class BACnetUnconfirmedService {
 	public static <T extends BACnetUnconfirmedService> T create(Class<? extends BACnetUnconfirmedService> clazz,
 			final ByteBuf apdu) throws BACnetParseException {
 		//TODO: does it make sense to parse the service choice here and decide on that basis ?
-		if (clazz == IAmService.class) {
-			return (T) new IAmService(apdu);
-		} else if (clazz == WhoIsService.class) {
-			return (T) new WhoIsService(apdu);
-		} else if (clazz == TimeSynchronizationService.class) {
-			return (T) new TimeSynchronizationService(apdu);
+		if (clazz == BACnetIAmService.class) {
+			return (T) new BACnetIAmService(apdu);
+		} else if (clazz == BACnetWhoIsService.class) {
+			return (T) new BACnetWhoIsService(apdu);
+		} else if (clazz == BACnetTimeSynchronizationService.class) {
+			return (T) new BACnetTimeSynchronizationService(apdu);
 		}
 
 		return null;
 	}
 
+	public abstract byte getServiceChoice();
+	
 	public abstract void encode(final ByteBuf buf);
 
 }

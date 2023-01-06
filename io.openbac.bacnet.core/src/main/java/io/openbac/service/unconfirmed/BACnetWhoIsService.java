@@ -13,9 +13,9 @@ import io.openbac.bacnet.type.primitive.BACnetUnsignedInteger;
  * @author Joerg Seitter
  *
  */
-public class WhoIsService extends BACnetUnconfirmedService {
+public class BACnetWhoIsService extends BACnetUnconfirmedService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(WhoIsService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BACnetWhoIsService.class);
 
 	/**
 	 * optional parameter
@@ -26,13 +26,18 @@ public class WhoIsService extends BACnetUnconfirmedService {
 	 */
 	private BACnetUnsignedInteger deviceInstanceRangeHighLimit = null;
 
+	@Override
+	public byte getServiceChoice() {
+		return BACnetUnconfirmedService.Choice.WHO_IS.serviceChoice;
+	}
+	
 	/**
 	 * Constrcutor decodes service details.
 	 * It is expected that the service choice is evaluated before
 	 * @param apdu
 	 * @throws BACnetParseException
 	 */
-	public WhoIsService(final ByteBuf apdu)  throws BACnetParseException {
+	public BACnetWhoIsService(final ByteBuf apdu)  throws BACnetParseException {
 
 		// check if the WhoIS Request has parameters
 		if (apdu.readableBytes() > 0) {
@@ -92,5 +97,6 @@ public class WhoIsService extends BACnetUnconfirmedService {
 	public void setDeviceInstanceRangeHighLimit(BACnetUnsignedInteger deviceInstanceRangeHighLimit) {
 		this.deviceInstanceRangeHighLimit = deviceInstanceRangeHighLimit;
 	}
+
 
 }

@@ -12,27 +12,32 @@ import io.openbac.bacnet.type.primitive.BACnetObjectIdentifier;
 import io.openbac.bacnet.type.primitive.BACnetPrimitive;
 import io.openbac.bacnet.type.primitive.BACnetUnsignedInteger;
 
-public class IAmService extends BACnetUnconfirmedService{
+public class BACnetIAmService extends BACnetUnconfirmedService{
 
-	private static final Logger LOG = LoggerFactory.getLogger(IAmService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BACnetIAmService.class);
 
 	private BACnetObjectIdentifier objectIdentifier;
 	private BACnetUnsignedInteger maxAPDULengthAccepted;
 	private BACnetSegmentation segmentationSupported;
 	private BACnetUnsignedInteger vendorID;
 
+	@Override
+	public byte getServiceChoice() {
+		return BACnetUnconfirmedService.Choice.I_AM.serviceChoice;
+	}
+	
 	/**
 	 * default constructor uses device id 0 maxAPDU of 480 No segementation and
 	 * vendorID of 0
 	 */
-	public IAmService() {
+	public BACnetIAmService() {
 		this.objectIdentifier = new BACnetObjectIdentifier(BACnetObjectType.ObjectType.DEVICE, 0);
 		this.maxAPDULengthAccepted = new BACnetUnsignedInteger(480);
 		this.segmentationSupported = new BACnetSegmentation(BACnetSegmentation.noSegmentation);
 		this.vendorID = new BACnetUnsignedInteger(195);
 	}
 
-	public IAmService(BACnetObjectIdentifier objectIdentifier, BACnetUnsignedInteger maxAPDULengthAccepted,
+	public BACnetIAmService(BACnetObjectIdentifier objectIdentifier, BACnetUnsignedInteger maxAPDULengthAccepted,
 			BACnetSegmentation segmentationSupported, BACnetUnsignedInteger vendorID) {
 		this.objectIdentifier = objectIdentifier;
 		this.maxAPDULengthAccepted = maxAPDULengthAccepted;
@@ -46,7 +51,7 @@ public class IAmService extends BACnetUnconfirmedService{
 	 * @param apdu
 	 * @throws BACnetParseException
 	 */
-	public IAmService(final ByteBuf apdu) throws BACnetParseException {
+	public BACnetIAmService(final ByteBuf apdu) throws BACnetParseException {
 
 		LOG.debug("expecting BACnetObjectIdentifier for iAmDeviceIdentifier");
 		objectIdentifier = BACnetPrimitive.createPrimitive(BACnetObjectIdentifier.class, apdu);

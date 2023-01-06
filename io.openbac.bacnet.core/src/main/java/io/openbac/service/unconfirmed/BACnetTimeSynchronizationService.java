@@ -12,17 +12,22 @@ import io.openbac.bacnet.type.primitive.BACnetTime;
  * @author Joerg Seitter
  *
  */
-public class TimeSynchronizationService extends BACnetUnconfirmedService {
+public class BACnetTimeSynchronizationService extends BACnetUnconfirmedService {
 
 	BACnetDate date;
 	BACnetTime time;
 
-	public TimeSynchronizationService(BACnetDate date, BACnetTime time) {
+	@Override
+	public byte getServiceChoice() {
+		return BACnetUnconfirmedService.Choice.TIME_SYNCHRONISATION.serviceChoice;
+	}
+	
+	public BACnetTimeSynchronizationService(BACnetDate date, BACnetTime time) {
 		this.date = date;
 		this.time = time;
 	}
 
-	public TimeSynchronizationService(final ByteBuf buf) throws BACnetParseException {
+	public BACnetTimeSynchronizationService(final ByteBuf buf) throws BACnetParseException {
 		date = BACnetPrimitive.createPrimitive(BACnetDate.class, buf);
 		time = BACnetPrimitive.createPrimitive(BACnetTime.class, buf);
 	}
