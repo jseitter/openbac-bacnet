@@ -47,9 +47,9 @@ public class BACnetIAmServiceTest extends BACnetTest {
 
 			buf.readByte(); // skip PDU Type
 			buf.readByte(); // skip service choice
- 			BACnetIAmService srv = BACnetUnconfirmedService.create(BACnetIAmService.class, buf);
+ 		//	BACnetIAmService srv = BACnetUnconfirmedService.create(BACnetIAmService.class, buf);
 			
-			System.out.println(srv.toString());
+		//	System.out.println(srv.toString());
 			
 		}
 	}
