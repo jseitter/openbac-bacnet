@@ -85,6 +85,8 @@ public abstract class BACnetPrimitive extends BACnetEncodable {
                         return (T) new BACnetCharacterString(data);
                 } else if (clazz == BACnetBitString.class) {
                         return (T) new BACnetBitString(data);
+                } else if (clazz == BACnetEnumerated.class) {
+            	  		return (T) new BACnetEnumerated(data);
                 } else if (clazz == BACnetDate.class) {
                         return (T) new BACnetDate(data);
                 } else if (clazz == BACnetTime.class) {
@@ -92,7 +94,7 @@ public abstract class BACnetPrimitive extends BACnetEncodable {
                 } else if (clazz == BACnetObjectIdentifier.class) {
                         return (T) new BACnetObjectIdentifier(data);
                 }
-                
+                //TODO: add logging when we pass through here
                 return null;
                 
         }
@@ -118,6 +120,8 @@ public abstract class BACnetPrimitive extends BACnetEncodable {
                         return new BACnetCharacterString(data);
                 } else if (type == Type.BIT_STRING) {
                         return new BACnetBitString(data);
+                } else if (type == Type.ENUMERATED) {
+            	  	return new BACnetEnumerated(data);
                 } else if (type == Type.DATE) {
                         return new BACnetDate(data);
                 } else if (type == Type.TIME) {
@@ -127,7 +131,6 @@ public abstract class BACnetPrimitive extends BACnetEncodable {
                 } else {
                         throw new IllegalArgumentException("invalid type, tagNumber: 0x" + HexUtils.convert(tagNumber));
                 }
-
         }
 
         @Override
