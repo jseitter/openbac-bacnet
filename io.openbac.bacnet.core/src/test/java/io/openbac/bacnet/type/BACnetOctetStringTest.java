@@ -33,10 +33,7 @@ public class BACnetOctetStringTest extends BACnetTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// get the testdata
-		InputStream testdata = BACnetOctetStringTest.class.getClassLoader()
-				.getResourceAsStream("io/openbac/bacnet/type/BACnetOctetString.td");
-		loader = new TestDataLoader(testdata);
+		init("io/openbac/bacnet/type/BACnetOctetString.td");
 	}
 
 	@Test

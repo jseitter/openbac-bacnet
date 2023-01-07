@@ -30,10 +30,7 @@ public class BACnetDateTest extends BACnetTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// get the testdata
-		InputStream testdata = BACnetDateTest.class.getClassLoader()
-				.getResourceAsStream("io/openbac/bacnet/type/BACnetDate.td");
-		loader = new TestDataLoader(testdata);
+		init("io/openbac/bacnet/type/BACnetDate.td");
 	}
 
 	@Test

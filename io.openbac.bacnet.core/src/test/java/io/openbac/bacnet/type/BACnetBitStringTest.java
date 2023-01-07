@@ -30,10 +30,7 @@ public class BACnetBitStringTest extends BACnetTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// get the testdata
-		InputStream testdata = BACnetBitStringTest.class.getClassLoader()
-				.getResourceAsStream("io/openbac/bacnet/type/BACnetBitString.td");
-		loader = new TestDataLoader(testdata);
+		init("io/openbac/bacnet/type/BACnetBitString.td");
 	}
 
 	@Test

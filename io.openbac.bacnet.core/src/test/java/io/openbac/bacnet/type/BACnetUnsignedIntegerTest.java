@@ -18,10 +18,7 @@ public class BACnetUnsignedIntegerTest extends BACnetTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// get the testdata
-		InputStream testdata = BACnetBooleanTest.class.getClassLoader()
-				.getResourceAsStream("io/openbac/bacnet/type/BACnetUnsignedInteger.td");
-		loader = new TestDataLoader(testdata);
+		init("io/openbac/bacnet/type/BACnetUnsignedInteger.td");
 	}
 
 	@Test
