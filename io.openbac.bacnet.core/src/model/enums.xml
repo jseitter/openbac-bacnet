@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bacnetEnumeratedClasses>
 	<enumeratedClass name="BACnetPropertyIdentifier">
+		<enumerationEntry name="objectList" value="76" />
 		<enumerationEntry name="presentValue" value="85" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAbortReason">
