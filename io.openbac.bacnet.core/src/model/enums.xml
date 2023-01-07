@@ -1,122 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bacnetEnumeratedClasses>
+	<enumeratedClass name="BACnetPropertyIdentifier">
+		<enumerationEntry name="presentValue" value="85" />
+	</enumeratedClass>
 	<enumeratedClass name="BACnetAbortReason">
-		<enumerationEntry name="other" value="0"/>
-		<enumerationEntry name="bufferOverflow" value="1"/>
-		<enumerationEntry name="invalidApduInThisState" value="2"/>
-		<enumerationEntry name="preemptedByHigherPriorityTask" value="3"/>
-		<enumerationEntry name="segmentationNotSupported" value="4"/>
-		<enumerationEntry name="securityError" value="5"/>
-		<enumerationEntry name="insufficientSecurity" value="6"/>
-		<enumerationEntry name="windowSizeOutOfRange" value="7"/>
-		<enumerationEntry name="applicationExceededReplyTime" value="8"/>
-		<enumerationEntry name="outOfResources" value="9"/>
-		<enumerationEntry name="tsmTimeout" value="10"/>
-		<enumerationEntry name="apduTooLong" value="11"/>
+		<enumerationEntry name="other" value="0" />
+		<enumerationEntry name="bufferOverflow" value="1" />
+		<enumerationEntry name="invalidApduInThisState" value="2" />
+		<enumerationEntry name="preemptedByHigherPriorityTask" value="3" />
+		<enumerationEntry name="segmentationNotSupported" value="4" />
+		<enumerationEntry name="securityError" value="5" />
+		<enumerationEntry name="insufficientSecurity" value="6" />
+		<enumerationEntry name="windowSizeOutOfRange" value="7" />
+		<enumerationEntry name="applicationExceededReplyTime" value="8" />
+		<enumerationEntry name="outOfResources" value="9" />
+		<enumerationEntry name="tsmTimeout" value="10" />
+		<enumerationEntry name="apduTooLong" value="11" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetRejectReason">
-		<enumerationEntry name="other" value="0"/>
-		<enumerationEntry name="bufferOverflow" value="1"/>
-		<enumerationEntry name="inconsistentParameters" value="2"/>
-		<enumerationEntry name="invalidParameterDataType" value="3"/>
-		<enumerationEntry name="invalidTag" value="4"/>
-		<enumerationEntry name="missingRequiredParameter" value="5"/>
-		<enumerationEntry name="parameterOutOfRange" value="6"/>
-		<enumerationEntry name="tooManyArguments" value="7"/>
-		<enumerationEntry name="undefinedEnumeration" value="8"/>
-		<enumerationEntry name="unrecognizedService" value="9"/>
+		<enumerationEntry name="other" value="0" />
+		<enumerationEntry name="bufferOverflow" value="1" />
+		<enumerationEntry name="inconsistentParameters" value="2" />
+		<enumerationEntry name="invalidParameterDataType" value="3" />
+		<enumerationEntry name="invalidTag" value="4" />
+		<enumerationEntry name="missingRequiredParameter" value="5" />
+		<enumerationEntry name="parameterOutOfRange" value="6" />
+		<enumerationEntry name="tooManyArguments" value="7" />
+		<enumerationEntry name="undefinedEnumeration" value="8" />
+		<enumerationEntry name="unrecognizedService" value="9" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAction">
-		<enumerationEntry name="direct" value="0"/>
-		<enumerationEntry name="reverse" value="1"/>
+		<enumerationEntry name="direct" value="0" />
+		<enumerationEntry name="reverse" value="1" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetBinaryPV">
-		<enumerationEntry name="inactive" value="0"/>
-		<enumerationEntry name="active" value="1"/>
+		<enumerationEntry name="inactive" value="0" />
+		<enumerationEntry name="active" value="1" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetDeviceStatus">
-		<enumerationEntry name="operational" value="0"/>
-		<enumerationEntry name="operationalReadOnly" value="1"/>
-		<enumerationEntry name="downloadRequired" value="2"/>
-		<enumerationEntry name="downloadInProgress" value="3"/>
-		<enumerationEntry name="nonOperational" value="4"/>
-		<enumerationEntry name="backupInProgress" value="5"/>
+		<enumerationEntry name="operational" value="0" />
+		<enumerationEntry name="operationalReadOnly" value="1" />
+		<enumerationEntry name="downloadRequired" value="2" />
+		<enumerationEntry name="downloadInProgress" value="3" />
+		<enumerationEntry name="nonOperational" value="4" />
+		<enumerationEntry name="backupInProgress" value="5" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetSegmentation">
-		<enumerationEntry name="segmentedBoth" value="0"/>
-		<enumerationEntry name="segmentedTransmit" value="1"/>
-		<enumerationEntry name="segmentedReceive" value="2"/>
-		<enumerationEntry name="noSegmentation" value="3"/>
+		<enumerationEntry name="segmentedBoth" value="0" />
+		<enumerationEntry name="segmentedTransmit" value="1" />
+		<enumerationEntry name="segmentedReceive" value="2" />
+		<enumerationEntry name="noSegmentation" value="3" />
 	</enumeratedClass>
 
 	<enumeratedClass name="BACnetAccessAuthenticationFactorDisable">
-		<enumerationEntry name="none" value="0"/>
-		<enumerationEntry name="disabled" value="1"/>
-		<enumerationEntry name="disabledLost" value="2"/>
-		<enumerationEntry name="disabledStolen" value="3"/>
-		<enumerationEntry name="disabledDamaged" value="4"/>
-		<enumerationEntry name="disabledDestroyed" value="5"/>
+		<enumerationEntry name="none" value="0" />
+		<enumerationEntry name="disabled" value="1" />
+		<enumerationEntry name="disabledLost" value="2" />
+		<enumerationEntry name="disabledStolen" value="3" />
+		<enumerationEntry name="disabledDamaged" value="4" />
+		<enumerationEntry name="disabledDestroyed" value="5" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAccessCredentialDisable">
-		<enumerationEntry name="none" value="0"/>
-		<enumerationEntry name="disable" value="1"/>
-		<enumerationEntry name="disableManual" value="2"/>
-		<enumerationEntry name="disableLockout" value="3"/>
+		<enumerationEntry name="none" value="0" />
+		<enumerationEntry name="disable" value="1" />
+		<enumerationEntry name="disableManual" value="2" />
+		<enumerationEntry name="disableLockout" value="3" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAccessCredentialDisableReason">
-		<enumerationEntry name="disabled" value="0"/>
-		<enumerationEntry name="disabledNeedsProvisioning" value="1"/>
-		<enumerationEntry name="disabledUnassigned" value="2"/>
-		<enumerationEntry name="disabledNotYetActive" value="3"/>
-		<enumerationEntry name="disabledExpired" value="4"/>
-		<enumerationEntry name="disabledLockout" value="5"/>
-		<enumerationEntry name="disabledMaxDays" value="6"/>
-		<enumerationEntry name="disabledMaxUses" value="7"/>
-		<enumerationEntry name="disabledInactivity" value="8"/>
-		<enumerationEntry name="disabledManual" value="9"/>
+		<enumerationEntry name="disabled" value="0" />
+		<enumerationEntry name="disabledNeedsProvisioning" value="1" />
+		<enumerationEntry name="disabledUnassigned" value="2" />
+		<enumerationEntry name="disabledNotYetActive" value="3" />
+		<enumerationEntry name="disabledExpired" value="4" />
+		<enumerationEntry name="disabledLockout" value="5" />
+		<enumerationEntry name="disabledMaxDays" value="6" />
+		<enumerationEntry name="disabledMaxUses" value="7" />
+		<enumerationEntry name="disabledInactivity" value="8" />
+		<enumerationEntry name="disabledManual" value="9" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAccessEvent">
-		<enumerationEntry name="TODO" value="1"/>
+		<enumerationEntry name="TODO" value="1" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAccessPassbackMode">
-		<enumerationEntry name="passbackOff" value="0"/>
-		<enumerationEntry name="hardPassback" value="1"/>
-		<enumerationEntry name="softPassback" value="2"/>
+		<enumerationEntry name="passbackOff" value="0" />
+		<enumerationEntry name="hardPassback" value="1" />
+		<enumerationEntry name="softPassback" value="2" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAccessUserType">
-		<enumerationEntry name="asset" value="0"/>
-		<enumerationEntry name="group" value="1"/>
-		<enumerationEntry name="person" value="2"/>
+		<enumerationEntry name="asset" value="0" />
+		<enumerationEntry name="group" value="1" />
+		<enumerationEntry name="person" value="2" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAccessZoneOccupancyState">
-		<enumerationEntry name="normal" value="0"/>
-		<enumerationEntry name="belowLowerLimit" value="1"/>
-		<enumerationEntry name="atLowerLimit" value="2"/>
-		<enumerationEntry name="atUpperLimit" value="3"/>
-		<enumerationEntry name="aboveUpperLimit" value="4"/>
-		<enumerationEntry name="disabled" value="5"/>
-		<enumerationEntry name="notSupported" value="6"/>
+		<enumerationEntry name="normal" value="0" />
+		<enumerationEntry name="belowLowerLimit" value="1" />
+		<enumerationEntry name="atLowerLimit" value="2" />
+		<enumerationEntry name="atUpperLimit" value="3" />
+		<enumerationEntry name="aboveUpperLimit" value="4" />
+		<enumerationEntry name="disabled" value="5" />
+		<enumerationEntry name="notSupported" value="6" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAuthenticationFactorType">
-		<enumerationEntry name="TODO" value="1"/>
+		<enumerationEntry name="TODO" value="1" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAuthenticationStatus">
-		<enumerationEntry name="notReady" value="0"/>
-		<enumerationEntry name="ready" value="1"/>
-		<enumerationEntry name="disabled" value="2"/>
-		<enumerationEntry name="waitingForAuthenticationFactor" value="3"/>
-		<enumerationEntry name="waitingForAccompaniment" value="4"/>
-		<enumerationEntry name="waitingForVerification" value="5"/>
-		<enumerationEntry name="inProgress" value="6"/>
+		<enumerationEntry name="notReady" value="0" />
+		<enumerationEntry name="ready" value="1" />
+		<enumerationEntry name="disabled" value="2" />
+		<enumerationEntry name="waitingForAuthenticationFactor" value="3" />
+		<enumerationEntry name="waitingForAccompaniment" value="4" />
+		<enumerationEntry name="waitingForVerification" value="5" />
+		<enumerationEntry name="inProgress" value="6" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAuthorizationExemption">
-		<enumerationEntry name="passback" value="0"/>
-		<enumerationEntry name="occupancyCheck" value="1"/>
-		<enumerationEntry name="accessRights" value="2"/>
-		<enumerationEntry name="lockout" value="3"/>
-		<enumerationEntry name="deny" value="4"/>
-		<enumerationEntry name="verification" value="5"/>
-		<enumerationEntry name="authorizationDelay" value="6"/>
+		<enumerationEntry name="passback" value="0" />
+		<enumerationEntry name="occupancyCheck" value="1" />
+		<enumerationEntry name="accessRights" value="2" />
+		<enumerationEntry name="lockout" value="3" />
+		<enumerationEntry name="deny" value="4" />
+		<enumerationEntry name="verification" value="5" />
+		<enumerationEntry name="authorizationDelay" value="6" />
 	</enumeratedClass>
 
 </bacnetEnumeratedClasses>
