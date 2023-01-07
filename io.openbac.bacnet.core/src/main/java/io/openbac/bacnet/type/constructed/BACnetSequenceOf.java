@@ -1,15 +1,18 @@
-package io.openbac.bacnet.type;
+package io.openbac.bacnet.type.constructed;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import io.netty.buffer.ByteBuf;
+import io.openbac.bacnet.type.BACnetEncodable;
 
 /**
  *
- * @author tbreckle
- * @param <E>
+ * @author Tobias Breckle
+ * @author Joerg Seitter
+ * 
+ * @param <E> the type stored in the Sequence
  */
 public class BACnetSequenceOf<E extends BACnetEncodable> extends BACnetEncodable {
 
@@ -89,7 +92,10 @@ public class BACnetSequenceOf<E extends BACnetEncodable> extends BACnetEncodable
 
 	@Override
 	public void encode(ByteBuf buf, int contextId) {
-		// TODO Auto-generated method stub
+		buf.writeByte(encodeOpeningTag(contextId));
+		
+		buf.writeByte(encodeOpeningTag(contextId));
+		
 		
 	}
 

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +30,8 @@ public class TestDataLoader {
 	public List<ByteBuf> resultBuffers = new ArrayList<>();
 	public List<HashMap<String, String>> resultProps = new ArrayList<>();
 
-	public TestDataLoader(InputStream testdata) throws FileNotFoundException {
-		LineNumberReader lnr = new LineNumberReader(new InputStreamReader(testdata));
+	public TestDataLoader(InputStream testdata) throws FileNotFoundException, UnsupportedEncodingException {
+		LineNumberReader lnr = new LineNumberReader(new InputStreamReader(testdata, "UTF-8"));
 		lnr.lines().forEachOrdered(line -> {
 			// check if comment
 			if (!line.startsWith("#")) {
