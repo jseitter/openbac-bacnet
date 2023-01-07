@@ -5,6 +5,11 @@ import io.openbac.bacnet.exceptions.BACnetParseException;
 
 public abstract class BACnetUnconfirmedService {
 
+	/**
+	 * Choice to resolve IDs and implementation classes;
+	 * @author joerg
+	 *
+	 */
 	public enum Choice {
 		I_AM((byte) 0x00,BACnetIAmService.class), 
 		I_HAVE((byte) 0x01,null),
