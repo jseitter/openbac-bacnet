@@ -1,7 +1,6 @@
-package io.openbac.bacnet.type.constructed;
+package io.openbac.bacnet.type;
 
 import io.netty.buffer.ByteBuf;
-import io.openbac.bacnet.type.BACnetEncodable;
 import io.openbac.bacnet.type.primitive.BACnetPrimitive;
 
 public class BACnetAny<T extends BACnetEncodable> extends BACnetEncodable {
