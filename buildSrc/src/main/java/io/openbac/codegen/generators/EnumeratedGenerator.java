@@ -122,10 +122,11 @@ public class EnumeratedGenerator {
 		}
 
 		sb.append(System.lineSeparator());
-		sb.append("\tpublic ").append(enumeratedName).append("(").append(enumeratedName).append(" value) {")
-				.append(System.lineSeparator());
-		sb.append("\t\tthis(value.intValue());").append(System.lineSeparator());
-		sb.append("\t}").append(System.lineSeparator()).append(System.lineSeparator());
+// Commented out copy Constructor
+//		sb.append("\tpublic ").append(enumeratedName).append("(").append(enumeratedName).append(" value) {")
+//				.append(System.lineSeparator());
+//		sb.append("\t\tthis(value.intValue());").append(System.lineSeparator());
+//		sb.append("\t}").append(System.lineSeparator()).append(System.lineSeparator());
 
 		sb.append(System.lineSeparator());
 		sb.append("\tpublic ").append(enumeratedName).append("(BACnetEnumerated value) {")
