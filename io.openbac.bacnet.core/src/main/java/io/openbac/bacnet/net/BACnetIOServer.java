@@ -26,7 +26,6 @@ import io.openbac.bacnet.net.npdu.BACnetBVLLOutboundHandler;
 import io.openbac.bacnet.net.npdu.BACnetNPDU;
 import io.openbac.bacnet.net.npdu.BACnetNPDUDecoder;
 import io.openbac.bacnet.net.npdu.BACnetNPDUEncoder;
-import io.openbac.bacnet.net.npdu.BACnetNPDUHandler;
 
 /**
  * IO Server to handle network communication
