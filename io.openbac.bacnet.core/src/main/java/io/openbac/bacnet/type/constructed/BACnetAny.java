@@ -23,10 +23,7 @@ public class BACnetAny<T extends BACnetEncodable> extends BACnetEncodable {
 	@Override
 	public void encode(ByteBuf buf, int contextId) {
 		// open tag
-		int openTag = 0x00;
-		openTag = openTag | (contextId << 4);
-		openTag = openTag | 0x0E;
-		buf.writeByte(openTag);
+		buf.writeByte(encodeOpeningTag(contextId));
 		
 		// encode encapsulated type
 		if(value instanceof BACnetPrimitive) {
@@ -34,10 +31,8 @@ public class BACnetAny<T extends BACnetEncodable> extends BACnetEncodable {
 		} else {
 			value.encode(buf, 0); // TODO check if it is correct to always use 0 as contextId ??
 		}
-		//close tag
-		int closeTag = 0x00;
-		closeTag = closeTag | (contextId << 4);
-		closeTag = closeTag | 0x0F;
+		// close tag
+		buf.writeByte(encodeClosingTag(contextId));
 	}
 
 	@Override

@@ -62,6 +62,24 @@ public abstract class BACnetEncodable {
 	public abstract void encode(ByteBuf buf, int contextId);
 
 	/**
+	 * Encodes an opening tag
+	 * @param contextId
+	 * @return context ID shifted left 4 bits and lower bits 0xE
+	 */
+	protected byte encodeOpeningTag(int contextId) {
+		return (byte) ((contextId << 4) | 0x0E);
+	}
+	
+	/**
+	 * Encodes a closing tag
+	 * @param contextId
+	 * @return context ID shifted left 4 bits and lower bits 0xF
+	 */
+	protected byte encodeClosingTag(int contextId) {
+		return (byte) ((contextId << 4) | 0x0F);
+	}
+	
+	/**
 	 * Method to decode the tag data and positions the ByteBuf readpointer on the
 	 * first byte after the tag if it is an extended tag on the first byte after the
 	 * extended tag
