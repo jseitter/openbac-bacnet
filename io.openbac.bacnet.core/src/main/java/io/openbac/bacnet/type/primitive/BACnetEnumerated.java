@@ -3,6 +3,11 @@ package io.openbac.bacnet.type.primitive;
 import io.netty.buffer.ByteBuf;
 import io.openbac.util.TagUtils;
 
+/**
+ * Enumerated Primitive
+ * @author Joerg Seitter
+ *
+ */
 public class BACnetEnumerated extends BACnetPrimitive {
 
 	protected long valueInteger = 0;
