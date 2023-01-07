@@ -10,7 +10,7 @@ public abstract class BACnetUnconfirmedService {
 	 * @author joerg
 	 *
 	 */
-	public enum Choice {
+	public static enum Choice {
 		I_AM((byte) 0x00,BACnetIAmService.class), 
 		I_HAVE((byte) 0x01,null),
 		UNCONFIRMED_COV_NOTIFICATION((byte) 0x02,null),
@@ -23,9 +23,9 @@ public abstract class BACnetUnconfirmedService {
 		UTC_TIME_SYNCHRONISATION((byte) 0x09,null);
 
 		public final byte serviceChoice;
-		public final Class implementationClass;
+		public final Class<? extends BACnetUnconfirmedService> implementationClass;
 
-		Choice(byte serviceChoice, Class implementationClass) {
+		Choice(byte serviceChoice, Class<? extends BACnetUnconfirmedService> implementationClass) {
 
 			this.serviceChoice = serviceChoice;
 			this.implementationClass= implementationClass;
