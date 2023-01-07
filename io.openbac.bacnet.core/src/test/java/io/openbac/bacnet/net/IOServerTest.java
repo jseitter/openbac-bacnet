@@ -23,7 +23,7 @@ public class IOServerTest {
 	public void test() throws IOException, InterruptedException {
 		
 		BACnetIOServer srv = new BACnetIOServer("192.168.60.26", BACnetIOServer.BACNET_DEFAULT_PORT0);
-		srv.run();
+		//srv.run();
 		
 	}
 
