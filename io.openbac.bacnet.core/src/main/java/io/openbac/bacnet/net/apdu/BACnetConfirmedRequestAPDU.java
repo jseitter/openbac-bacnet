@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import io.netty.buffer.ByteBuf;
 import io.openbac.bacnet.exceptions.BACnetParseException;
+import io.openbac.service.confirmed.BACnetConfirmedService;
+import io.openbac.service.confirmed.BACnetConfirmedService.Choice;
 import io.openbac.util.HexUtils;
   
 /**
@@ -17,9 +19,6 @@ public class BACnetConfirmedRequestAPDU extends BACnetAPDU {
 
         private static final Logger LOG = LoggerFactory.getLogger(BACnetConfirmedRequestAPDU.class);
 
- 
-    	
-
         private boolean segmentedMessage = false;
         private boolean moreFollows = false;
         private boolean segmentedResponseAccepted = false;
@@ -29,14 +28,23 @@ public class BACnetConfirmedRequestAPDU extends BACnetAPDU {
         private byte sequenceNumber = 0;
         private byte proposedWindowSize = 0;
         
+    	private ByteBuf buf;
+    	private BACnetConfirmedService srv;
+    	
         @Override
         public PDUType getPDUType() {
                 return PDUType.CONFIRMED_REQUEST;
         }
 
-        public BACnetConfirmedRequestAPDU(final ByteBuf buf) throws BACnetParseException {
+    	/**
+    	 * decode APDU
+    	 * 
+    	 * @param apdu
+    	 * @throws BACnetParseException
+    	 */
+        public BACnetConfirmedRequestAPDU(final ByteBuf apdu) throws BACnetParseException {
 
-                byte apci = buf.readByte();
+                byte apci = apdu.readByte();
                 byte segmentedMessageByte = (byte) ((apci & 0b00001000) >> 3);
                 byte moreFollowsByte = (byte) ((apci & 0b00000100) >> 2);
                 byte segmentedResponseAcceptedByte = (byte) ((apci & 0b00000010) >> 1);
@@ -56,7 +64,7 @@ public class BACnetConfirmedRequestAPDU extends BACnetAPDU {
                 }
                 LOG.debug("segmented response accepted: " + segmentedResponseAccepted);
                 
-                byte segmentConfiguration = buf.readByte();
+                byte segmentConfiguration = apdu.readByte();
                 
                 Byte maxSegmentsAcceptedByte = (byte) ((segmentConfiguration & 0b01110000) >> 4);
                 if (maxSegmentsAcceptedByte == 0b00000000) {
@@ -93,27 +101,29 @@ public class BACnetConfirmedRequestAPDU extends BACnetAPDU {
                 
                 LOG.debug("max segments accepted: " + maxSegmentsAccepted);
                 LOG.debug("max apdu length accepted: " + maxAPDULengthAccepted);
-                invokeID = buf.readByte();
+                invokeID = apdu.readByte();
                 LOG.debug("invoke id: 0x" + HexUtils.convert(invokeID));
                 
                 if (segmentedMessage) {
                         
-                        sequenceNumber = buf.readByte();
+                        sequenceNumber = apdu.readByte();
                         LOG.debug("sequence number: 0x" + HexUtils.convert(sequenceNumber));
-                        proposedWindowSize = buf.readByte();
+                        proposedWindowSize = apdu.readByte();
                         LOG.debug("proposed window size: 0x" + HexUtils.convert(proposedWindowSize));
-                        
+                        // TODO handle segmented services
                 }
                 
-                byte serviceChoiceRaw = buf.readByte();
-//                serviceChoiceType = ConfirmedServiceChoice.getServiceChoiceType(serviceChoiceRaw);
-//                LOG.debug("serviceChoice: 0x" + HexUtils.convert(serviceChoiceRaw) + ": " + serviceChoiceType.name());
+                byte serviceChoiceRaw = apdu.readByte();
+                Choice serviceChoiceType = BACnetConfirmedService.Choice.forId(serviceChoiceRaw);
+                LOG.debug("serviceChoice: 0x" + HexUtils.convert(serviceChoiceRaw) + ": " + serviceChoiceType.name());
 
-        		// copy the unprocessed part of the datagram
-
+                srv = BACnetConfirmedService.create(serviceChoiceType.implementationClass, apdu);
 
         }
         
+        public BACnetConfirmedService getService() {
+        	return srv;
+        }
         
  
         public boolean isSegmentedMessage() {
