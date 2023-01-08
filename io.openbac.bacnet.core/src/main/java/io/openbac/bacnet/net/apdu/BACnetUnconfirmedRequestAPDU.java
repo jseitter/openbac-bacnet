@@ -36,12 +36,13 @@ public class BACnetUnconfirmedRequestAPDU extends BACnetAPDU {
 		 * given bytebuf is positioned on serviceChoice
 		 * 
 		 */
+		byte apci = apdu.readByte(); // can be skipped
 		byte serviceChoiceRaw = apdu.readByte();
 		BACnetUnconfirmedService.Choice serviceChoiceType = BACnetUnconfirmedService.Choice.forId(serviceChoiceRaw);
 		LOG.debug("serviceChoice: 0x" + HexUtils.convert(serviceChoiceRaw) + ": " + serviceChoiceType.name());
 
 		srv = BACnetUnconfirmedService
-				.create(BACnetUnconfirmedService.Choice.forId(serviceChoiceRaw).implementationClass, apdu);
+				.create(serviceChoiceType.implementationClass, apdu);
 
 	}
 
