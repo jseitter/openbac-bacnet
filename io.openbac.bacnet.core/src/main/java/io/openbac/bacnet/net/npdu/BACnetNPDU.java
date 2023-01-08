@@ -159,7 +159,7 @@ public final class BACnetNPDU {
 		LOG.debug("expecting reply: " + expectingReply);
 
 		// copy the unprocessed part of the datagram
-		payload = rawNPDU.slice();
+		payload = rawNPDU;//.slice();
 
 	}
 

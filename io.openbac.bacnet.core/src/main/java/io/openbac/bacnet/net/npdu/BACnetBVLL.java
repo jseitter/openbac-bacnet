@@ -139,8 +139,8 @@ public class BACnetBVLL {
                 bvllLength = rawDatagram.readShort();
                 LOG.debug("bvllLength " + bvllLength);
 
-                // copy the unparsed section of the packet to rawData
-                buf = rawDatagram.slice();
+                // assign to hand over (this was .slice before)
+                buf = rawDatagram;
                 switch (functionType) {
                         case FORWARDED_NPDU: {
                                 // extract optional ip address data
