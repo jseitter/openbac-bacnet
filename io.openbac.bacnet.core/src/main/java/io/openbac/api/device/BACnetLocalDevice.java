@@ -31,31 +31,4 @@ public class BACnetLocalDevice {
 	}
 
 
-	//TODO encapsulate the handler in a subclass/interface cinstruction to keep 
-	// the LocalDevice API uncluttered
-	
-	/**
-	 * Service Handler for WhoIs
-	 * @param srv
-	 * @param ctx
-	 */
-//   public void handleWhoIsService(WhoIsService srv, ChannelHandlerContext ctx) {
-//	   LOG.debug("handle WhoIs");
-//	   // the IAm Service should be created by the local device values ...
-//	   // TODO fix this
-//	   ctx.writeAndFlush(new IAmService());
-	  
-//   }
-
-	/**
-	 * Service Handler for IAm
-	 * @param srv
-	 * @param ctx
-	 */
-
-//   public void handleIAmService(IAmService srv, ChannelHandlerContext ctx) {
-//	   LOG.debug("handle IAm");
-//	  
-//	   //remoteDeviceList.add(new BACnetRemoteDevice(,, srv.getMaxAPDULengthAccepted(), srv.getSegmentationSupported()))
-//   }
 }
