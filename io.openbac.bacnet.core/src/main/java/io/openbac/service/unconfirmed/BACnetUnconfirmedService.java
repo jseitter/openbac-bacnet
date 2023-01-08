@@ -10,7 +10,7 @@ public abstract class BACnetUnconfirmedService {
 	 * @author joerg
 	 *
 	 */
-	public static enum Choice {
+	public enum Choice {
 		I_AM((byte) 0x00,BACnetIAmService.class), 
 		I_HAVE((byte) 0x01,null),
 		UNCONFIRMED_COV_NOTIFICATION((byte) 0x02,null),
