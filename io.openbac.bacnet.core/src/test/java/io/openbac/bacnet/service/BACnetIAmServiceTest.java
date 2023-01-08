@@ -28,33 +28,35 @@ public class BACnetIAmServiceTest extends BACnetTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// get the testdata
-		InputStream testdata = BACnetIAmServiceTest.class.getClassLoader()
-				.getResourceAsStream("io/openbac/bacnet/service/BACnetIAmService.td");
-		loader = new TestDataLoader(testdata);
+		init("io/openbac/bacnet/service/BACnetIAmService.td");
 	}
 
 	@Test
 	public void testDecode() throws BACnetParseException {
 
 		int size = loader.resultBuffers.size();
-		System.out.println("will run "+size+" tests");
+		System.out.println("will run " + size + " tests");
 		for (int i = 0; i < size; i++) {
-			System.out.println("------------ running case # "+i+" -------------");
+			System.out.println("------------ running case # " + i + " -------------");
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
-			
-			Assert.assertEquals(Long.valueOf(props.get("pdutype")).longValue(),(int)(buf.readByte() >> 4) & 0xFF); //  PDU Type
-			Assert.assertEquals(Long.valueOf(props.get("choice")).longValue(), (int)buf.readByte() ); //  service choice
- 			
+
+			Assert.assertEquals(Long.valueOf(props.get("pdutype")).longValue(), (int) (buf.readByte() >> 4) & 0xFF); // PDU
+																														// Type
+			Assert.assertEquals(Long.valueOf(props.get("choice")).longValue(), (int) buf.readByte()); // service choice
+
 			BACnetIAmService srv = BACnetUnconfirmedService.create(BACnetIAmService.class, buf);
-			
+
 			System.out.println(srv.toString());
-			
-			Assert.assertEquals(Long.decode(props.get("objinstance")).longValue(),srv.getObjectIdentifier().getInstance());
-			Assert.assertEquals(Long.decode(props.get("objtype")).longValue(), srv.getObjectIdentifier().getObjectTypeInt());
-			Assert.assertEquals(Long.decode(props.get("maxapdu")).longValue(), srv.getMaxAPDULengthAccepted().intValue());
-			Assert.assertEquals(Long.decode(props.get("segmentation")).longValue(), srv.getSegmentationSupported().intValue());
+
+			Assert.assertEquals(Long.decode(props.get("objinstance")).longValue(),
+					srv.getObjectIdentifier().getInstance());
+			Assert.assertEquals(Long.decode(props.get("objtype")).longValue(),
+					srv.getObjectIdentifier().getObjectTypeInt());
+			Assert.assertEquals(Long.decode(props.get("maxapdu")).longValue(),
+					srv.getMaxAPDULengthAccepted().intValue());
+			Assert.assertEquals(Long.decode(props.get("segmentation")).longValue(),
+					srv.getSegmentationSupported().intValue());
 			Assert.assertEquals(Long.decode(props.get("vendor")).longValue(), srv.getVendorID().intValue());
 		}
 	}
