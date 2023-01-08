@@ -69,7 +69,7 @@ public abstract class BACnetAPDU {
         		
                 BACnetAPDU apdu = null; 
                 // get first octet (apci)
-                byte apci = buf.readByte();
+                byte apci = buf.getByte(buf.readerIndex());
                 //pduType is encoded in upper 4 bits
                 byte pduTypeId = (byte) (apci >> 4);
                 PDUType pduType = PDUType.getPDUType(pduTypeId);
