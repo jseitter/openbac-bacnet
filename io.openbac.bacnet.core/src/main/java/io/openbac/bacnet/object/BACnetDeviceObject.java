@@ -1,24 +1,30 @@
 package io.openbac.bacnet.object;
 
+import io.openbac.bacnet.type.BACnetSequenceOf;
+import io.openbac.bacnet.type.enumerated.BACnetDeviceStatus;
 import io.openbac.bacnet.type.enumerated.BACnetServicesSupported;
 import io.openbac.bacnet.type.primitive.BACnetBitString;
 import io.openbac.bacnet.type.primitive.BACnetCharacterString;
 import io.openbac.bacnet.type.primitive.BACnetObjectIdentifier;
 import io.openbac.bacnet.type.primitive.BACnetUnsignedInteger;
 
-public class BACnetDeviceObject implements BACnetObject {
+/**
+ * Represents a device
+ * @author Joerg Seitter
+ *
+ */
+public class BACnetDeviceObject {
 
 	//hardcoded supported services (see below)
-	private BACnetServicesSupported.Service[] supportedServices = {BACnetServicesSupported.Service.who_is,BACnetServicesSupported.Service.i_am};
-	
+	private BACnetServicesSupported.Service[] supportedServices = {BACnetServicesSupported.Service.who_is,BACnetServicesSupported.Service.i_am};	
 	private BACnetObjectIdentifier objectIdentifier=new BACnetObjectIdentifier(BACnetObjectType.ObjectType.DEVICE, 1);
 	private BACnetCharacterString objectName=new BACnetCharacterString("TestDevice");
 	private BACnetObjectType.ObjectType objectType = BACnetObjectType.ObjectType.DEVICE;
-//	private BACnetDeviceStatus systemStatus = BACnetDeviceStatus.operational;
+	private BACnetDeviceStatus systemStatus = BACnetDeviceStatus.operational;
 	private BACnetCharacterString vendorName=new BACnetCharacterString("openbac.io");
-	private BACnetUnsignedInteger vendorIdentifier; // Is this correct Unsigned16
-	private BACnetCharacterString modelName;
-	private BACnetCharacterString firmwareRevision;
+	private BACnetUnsignedInteger vendorIdentifier=new BACnetUnsignedInteger(911); // Is this correct Unsigned16
+	private BACnetCharacterString modelName = new BACnetCharacterString("openBAC");
+	private BACnetCharacterString firmwareRevision = new BACnetCharacterString("1.0");
 	private BACnetCharacterString applicationSoftwareVersion;
 	private BACnetCharacterString location;
 	private BACnetCharacterString description;
@@ -26,7 +32,7 @@ public class BACnetDeviceObject implements BACnetObject {
 	private BACnetUnsignedInteger protocolRevision=new BACnetUnsignedInteger(12);
 	private BACnetBitString protocolServicesSupported = new BACnetServicesSupported(supportedServices).getServicesSupported();  // helper class needed for this
 //	private BACnetObjectTypesSupported protocolObjectTypesSupported;
-//	private BACnetARRAY[N]of BACnetObjectIdentifier 
+	private BACnetSequenceOf<BACnetObjectIdentifier> objectList=new BACnetSequenceOf<>();
 	//structuredObjectList (optional)
 	private BACnetUnsignedInteger maxApduLengthAccepted=new BACnetUnsignedInteger(1476);
 //	private BACnetSegmentation segmentationSupported = BACnetSegmentation.noSegmentation; // hardcoded to no segmentation
@@ -38,5 +44,9 @@ public class BACnetDeviceObject implements BACnetObject {
 //	private List of BACnetAddressBinding deviceAddressBinding;
 	private BACnetUnsignedInteger databaseRevision;
 	
+	
+	public BACnetDeviceObject() {
+		
+	}
 	
 }
