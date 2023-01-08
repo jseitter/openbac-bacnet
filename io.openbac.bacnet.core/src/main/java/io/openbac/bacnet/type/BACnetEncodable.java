@@ -19,13 +19,8 @@ public abstract class BACnetEncodable {
 	// |-----|-----|-----|-----|-----|-----|-----|-----|
 
 	// Encoding of Class Bit
-	public static final boolean CLASS_PRIMITIVE = false;
-	public static final boolean CLASS_CONSTRUCTED = true;
-
-	// Value of Length Value Type field for open Tags
-	public static final int OPEN_TAG_LVT = 0x0e;
-	// Value of Length Value Type field for close Tags
-	public static final int CLOSE_TAG_LVT = 0x0f;
+	protected static final boolean CLASS_PRIMITIVE = false;
+	protected static final boolean CLASS_CONSTRUCTED = true;
 
 	protected ByteBuf buf;
 	protected int tagNumber;
@@ -59,7 +54,7 @@ public abstract class BACnetEncodable {
 	 * @param buf     the buffer to encode into
 	 * @param context the context id for the tag
 	 */
-	public abstract void encode(ByteBuf buf, int contextId);
+	protected abstract void encode(ByteBuf buf, int contextId);
 
 	/**
 	 * Encodes an opening tag
