@@ -1,8 +1,11 @@
 package io.openbac.service.confirmed;
 
+import java.nio.ByteBuffer;
+
 import io.netty.buffer.ByteBuf;
 import io.openbac.bacnet.exceptions.BACnetParseException;
 import io.openbac.bacnet.type.BACnetAny;
+import io.openbac.bacnet.type.BACnetEncodable;
 import io.openbac.bacnet.type.enumerated.BACnetPropertyIdentifier;
 import io.openbac.bacnet.type.primitive.BACnetEnumerated;
 import io.openbac.bacnet.type.primitive.BACnetObjectIdentifier;
@@ -24,36 +27,37 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 	/**
 	 * the response handling
 	 */
-	private ReadPropertyACK		response;
+	private ReadPropertyACK response;
 	public static final byte serviceChoice = BACnetConfirmedService.Choice.READ_PROPERTY.serviceChoice;
-	
-	
-	
+
 	public BACnetReadPropertyService(ByteBuf apdu) throws BACnetParseException {
 		request = new ReadPropertyRequest(apdu);
 	}
 
-	//TODO needed ?
+	// TODO needed ?
 	public byte getServiceChoice() {
 		return serviceChoice;
 	}
 
 	/**
 	 * get the object Identifier of the service
+	 * 
 	 * @return BACnetObjectIdentifier
 	 */
 	public BACnetObjectIdentifier getObjectIdentifier() {
 		return request.getObjectIdentifier();
 	}
-	
+
 	/**
 	 * get the property identifier of the service
+	 * 
 	 * @return
 	 */
 	public BACnetPropertyIdentifier getPropertyIdentifier() {
 		return request.getPropertyIdentifier();
-		
+
 	}
+
 	/**
 	 * Request for ReadProperty
 	 * 
@@ -133,7 +137,7 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 	 * @author Joerg Seitter
 	 *
 	 */
-	public static class ReadPropertyACK {
+	public static class ReadPropertyACK implements BACnetConfirmedService.BACnetResponse {
 
 		private BACnetObjectIdentifier objectIdentifier; // ctx 0
 		private BACnetPropertyIdentifier propertyIdentifier; // ctx 1
@@ -168,11 +172,12 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 			return propertyValue;
 		}
 
-		public void setPropertyValue(BACnetAny propertyValue) {
+		public void setPropertyValue(BACnetAny<? extends BACnetEncodable> propertyValue) {
 			this.propertyValue = propertyValue;
 		}
 
-		public void encode(final ByteBuf data) {
+		@Override
+		public void encode(ByteBuf data) {
 			data.writeByte(BACnetConfirmedService.Choice.READ_PROPERTY.serviceChoice);
 			objectIdentifier.encode(data, 0);
 			propertyIdentifier.encode(data, 1);
