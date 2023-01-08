@@ -2,7 +2,7 @@ package io.openbac.bacnet.object;
 
 /**
  *
- * @author tbreckle
+ * @author Tobias Breckle
  */
 public class BACnetObjectType {
         
