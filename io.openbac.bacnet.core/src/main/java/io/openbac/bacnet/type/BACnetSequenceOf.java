@@ -1,11 +1,10 @@
-package io.openbac.bacnet.type.constructed;
+package io.openbac.bacnet.type;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import io.netty.buffer.ByteBuf;
-import io.openbac.bacnet.type.BACnetEncodable;
 
 /**
  *
@@ -28,10 +27,16 @@ public class BACnetSequenceOf<E extends BACnetEncodable> extends BACnetEncodable
 
 	public BACnetSequenceOf(final ByteBuf data) {
 		this.elements = null;
+		buf = data;
+		decodeTag();
 
+		// TODO: decoding
+		// check open
+		// decode Elements into list
+		// until closing
 	}
 
-	public BACnetSequenceOf(ByteBuf data, Integer contextId)  {
+	public BACnetSequenceOf(ByteBuf data, Integer contextId) {
 
 		elements = new ArrayList<>();
 
@@ -93,10 +98,13 @@ public class BACnetSequenceOf<E extends BACnetEncodable> extends BACnetEncodable
 	@Override
 	public void encode(ByteBuf buf, int contextId) {
 		buf.writeByte(encodeOpeningTag(contextId));
-		
+
+		for (E element : elements) {
+			element.encode(buf, contextId);
+		}
+
 		buf.writeByte(encodeOpeningTag(contextId));
-		
-		
+
 	}
 
 	@Override
