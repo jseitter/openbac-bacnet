@@ -5,6 +5,11 @@ import io.openbac.bacnet.exceptions.BACnetParseException;
 
 public abstract class BACnetConfirmedService {
 
+	public interface BACnetResponse {
+		
+		public void encode(final ByteBuf buf);
+	}
+	
 	/**
 	 * Choice to resolve IDs and implementation classes;
 	 * @author joerg
