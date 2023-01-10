@@ -7,6 +7,7 @@ BACnet implementation for Java based on Netty network library
 #Architecture
 
 ```mermaid
+classDiagram
 BACnetService *-- BACnetServiceRequest
 BACnetService *-- BACnetServiceResponse
 BACnetResponse <|-- BACnetServiceResponse
