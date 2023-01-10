@@ -1,5 +1,7 @@
 plugins {
     id 'java-library'
+    id 'jacoco'
+    id "com.github.spotbugs" version "5.0.13" // for bug detection
     id "io.openbac.codegen"
 }
 
