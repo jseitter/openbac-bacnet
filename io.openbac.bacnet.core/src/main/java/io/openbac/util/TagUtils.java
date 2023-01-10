@@ -28,7 +28,7 @@ public class TagUtils {
 		// simple or extended tag ?
 		if (contextId < 15) {
 			// simple case
-			tag = (byte) ((contextId << 4) & 0xf0);
+			tag |= (byte) ((contextId << 4) & 0xf0);
 			// dynamic length encoding
 			if (length < 5) {
 				// Case 1:
