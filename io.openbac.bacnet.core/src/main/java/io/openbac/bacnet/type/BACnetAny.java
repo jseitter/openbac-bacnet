@@ -17,27 +17,26 @@ public class BACnetAny<T extends BACnetEncodable> extends BACnetEncodable {
 	}
 
 	/**
-	 * BACnet Any has to always encode with open and closing tags whatever is inside
+	 * BACnet Any has to always encode with open and closing tags whatever is inside??
 	 */
 	@Override
 	public void encode(ByteBuf buf, int contextId) {
 		// open tag
-		buf.writeByte(encodeOpeningTag(contextId));
+//		buf.writeByte(encodeOpeningTag(contextId));
 		
 		// encode encapsulated type
 		if(value instanceof BACnetPrimitive) {
 			((BACnetPrimitive) value).encodeApplication(buf);
 		} else {
-			value.encode(buf, 0); // TODO check if it is correct to always use 0 as contextId ??
+			value.encode(buf, contextId); // TODO check if it is correct to always use 0 as contextId ??
 		}
 		// close tag
-		buf.writeByte(encodeClosingTag(contextId));
+//		buf.writeByte(encodeClosingTag(contextId));
 	}
 
 	@Override
 	public Class<?> getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return BACnetAny.class;
 	}
 
 }

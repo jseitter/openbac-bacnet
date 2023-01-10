@@ -71,7 +71,7 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 		// [1] BACnetPropertyIdentifier
 		private BACnetPropertyIdentifier propertyIdentifier;
 		// [2] Unsigned OPTIONAL
-		private BACnetUnsignedInteger propertyArrayIndex;
+		private BACnetUnsignedInteger propertyArrayIndex = null;
 
 		/**
 		 * decoding constructor
@@ -138,11 +138,14 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 	 *
 	 */
 	public static class ReadPropertyACK implements BACnetConfirmedService.BACnetResponse {
-
-		private BACnetObjectIdentifier objectIdentifier; // ctx 0
-		private BACnetPropertyIdentifier propertyIdentifier; // ctx 1
-		private BACnetUnsignedInteger propertyArrayIndex; // ctx 2 optional
-		private BACnetAny propertyValue; // ctx 3
+		// ctx 0
+		private BACnetObjectIdentifier objectIdentifier; 
+		 // ctx 1
+		private BACnetPropertyIdentifier propertyIdentifier;
+		// ctx 2 optional
+		private BACnetUnsignedInteger propertyArrayIndex; 
+		// ctx 3
+		private BACnetAny<? extends BACnetEncodable> propertyValue; 
 
 		public BACnetObjectIdentifier getObjectIdentifier() {
 			return objectIdentifier;
@@ -168,7 +171,7 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 			this.propertyArrayIndex = propertyArrayIndex;
 		}
 
-		public BACnetAny getPropertyValue() {
+		public BACnetAny<? extends BACnetEncodable> getPropertyValue() {
 			return propertyValue;
 		}
 

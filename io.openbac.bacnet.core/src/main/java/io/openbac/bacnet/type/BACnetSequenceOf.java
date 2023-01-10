@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import io.netty.buffer.ByteBuf;
+import io.openbac.bacnet.type.primitive.BACnetPrimitive;
 
 /**
  *
@@ -95,15 +96,22 @@ public class BACnetSequenceOf<E extends BACnetEncodable> extends BACnetEncodable
 		return true;
 	}
 
-	@Override
+	// @Override
 	public void encode(ByteBuf buf, int contextId) {
 		buf.writeByte(encodeOpeningTag(contextId));
 
 		for (E element : elements) {
-			element.encode(buf, contextId);
+			
+			// encode encapsulated type
+			if(element instanceof BACnetPrimitive) {
+				((BACnetPrimitive) element).encodeApplication(buf);
+			} else {
+				element.encode(buf, contextId); // or shall this be zero ?
+			}
+			
 		}
 
-		buf.writeByte(encodeOpeningTag(contextId));
+		buf.writeByte(encodeClosingTag(contextId));
 
 	}
 

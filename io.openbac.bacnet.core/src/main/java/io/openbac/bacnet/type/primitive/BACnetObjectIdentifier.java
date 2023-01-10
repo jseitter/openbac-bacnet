@@ -9,6 +9,7 @@ import java.nio.ByteBuffer;
 
 import io.netty.buffer.ByteBuf;
 import io.openbac.bacnet.object.BACnetObjectType.ObjectType;
+import io.openbac.util.HexUtils;
 import io.openbac.util.TagUtils;
 
 /**
@@ -84,9 +85,9 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
 		result[3] = (byte) (instance & 0x000000ff);
 		result[2] = (byte) ((instance & 0x0000ff00) >> 8);
 		result[1] = (byte) ((instance & 0x003f0000) >> 16);
-		result[1] = (byte) (result[1] | (byte) ((objType & 0x03) << 6));
-		result[0] = (byte) ((objType & 0x3fc) >> 2);
-
+		result[1] = (byte) (result[1] | (byte) ((objType & 0b00000011) << 6));
+		result[0] = (byte) (((objType & 0xfff) >> 2) & 0xff);
+		LOG.debug("encode context objectinstance: "+HexUtils.convert(result)+ " "+objectType.toString()+":"+instance );
 		data.writeBytes(result);
 
 	}
@@ -101,8 +102,9 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
 		result[3] = (byte) (instance & 0x000000ff);
 		result[2] = (byte) ((instance & 0x0000ff00) >> 8);
 		result[1] = (byte) ((instance & 0x003f0000) >> 16);
-		result[1] = (byte) (result[1] | (byte) ((objType & 0x03) << 6));
-		result[0] = (byte) ((objType & 0x3fc) >> 2);
+		result[1] = (byte) ((instance & 0x003f0000) >> 16);
+		result[1] = (byte) (result[1] | (byte) ((objType & 0b00000011) << 6));
+		result[0] = (byte) (((objType & 0xfff) >> 2) & 0xff);
 
 		data.writeBytes(result);
 	}

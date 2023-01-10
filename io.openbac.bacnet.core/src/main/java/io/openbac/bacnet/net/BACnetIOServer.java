@@ -20,6 +20,7 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import io.netty.util.internal.logging.Slf4JLoggerFactory;
+import io.openbac.api.device.BACnetLocalDevice;
 import io.openbac.bacnet.net.apdu.BACnetAPDUHandler;
 import io.openbac.bacnet.net.npdu.BACnetBVLLInboundHandler;
 import io.openbac.bacnet.net.npdu.BACnetBVLLOutboundHandler;
@@ -43,7 +44,7 @@ public class BACnetIOServer {
 	private final int port;
 	private final String address;
 	private final InetAddress inetAddress;
-
+	private BACnetLocalDevice localDevice;
 	/**
 	 *
 	 * @param address
@@ -55,6 +56,10 @@ public class BACnetIOServer {
 
 		this.port = port;
 		this.address = address;
+		
+		// TODO make the local device external
+		// configurable via properties
+		localDevice=new BACnetLocalDevice();
 
 		try {
 			// resolve given ip adderss to InetAdress
@@ -80,7 +85,7 @@ public class BACnetIOServer {
 							ch.pipeline().addLast(new BACnetBVLLInboundHandler(), new BACnetBVLLOutboundHandler());
 							//ch.pipeline().addLast(new BACnetNPDUHandler());
 							ch.pipeline().addLast(new BACnetNPDUDecoder(), new BACnetNPDUEncoder());
-							ch.pipeline().addLast(new BACnetAPDUHandler());
+							ch.pipeline().addLast(new BACnetAPDUHandler(localDevice));
 						}
 					}).option(ChannelOption.SO_BROADCAST, true).option(ChannelOption.SO_REUSEADDR, true); // (6)
 

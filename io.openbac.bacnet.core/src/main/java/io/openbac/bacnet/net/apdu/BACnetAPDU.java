@@ -18,7 +18,7 @@ public abstract class BACnetAPDU {
 
         private static final Logger LOG = LoggerFactory.getLogger(BACnetAPDU.class);
 
-        enum PDUType {
+        public enum PDUType {
             CONFIRMED_REQUEST(  (byte) 0x00),
             UNCONFIRMED_REQUEST((byte) 0x01),
             SIMPLE_ACK(         (byte) 0x02),
@@ -55,7 +55,8 @@ public abstract class BACnetAPDU {
     	 * Buffer containing higher level protocol parts
     	 */
     	protected ByteBuf buffer;
-    	 
+    	
+		public abstract void encode(ByteBuf buf);
         
         public abstract PDUType getPDUType();
         
@@ -118,6 +119,6 @@ public abstract class BACnetAPDU {
 			return buffer;
 		}
 
-		public abstract void encode(ByteBuf buf);
+
 
 }

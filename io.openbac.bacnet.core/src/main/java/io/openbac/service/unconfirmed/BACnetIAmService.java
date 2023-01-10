@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import io.netty.buffer.ByteBuf;
 import io.openbac.bacnet.exceptions.BACnetParseException;
+import io.openbac.bacnet.object.BACnetDeviceObject;
 import io.openbac.bacnet.object.BACnetObjectType;
 import io.openbac.bacnet.type.enumerated.BACnetSegmentation;
 import io.openbac.bacnet.type.primitive.BACnetEnumerated;
@@ -30,9 +31,10 @@ public class BACnetIAmService extends BACnetUnconfirmedService{
 	 * default constructor uses device id 0 maxAPDU of 480 No segementation and
 	 * vendorID of 0
 	 */
-	public BACnetIAmService() {
-		this.objectIdentifier = new BACnetObjectIdentifier(BACnetObjectType.ObjectType.DEVICE, 0);
-		this.maxAPDULengthAccepted = new BACnetUnsignedInteger(480);
+	public BACnetIAmService(BACnetDeviceObject device) {
+		this.objectIdentifier = device.getObjectIdentifier();
+		this.maxAPDULengthAccepted = device.getMaxApduLengthAccepted();
+		//TODO align this with the device object
 		this.segmentationSupported = new BACnetSegmentation(BACnetSegmentation.noSegmentation);
 		this.vendorID = new BACnetUnsignedInteger(195);
 	}

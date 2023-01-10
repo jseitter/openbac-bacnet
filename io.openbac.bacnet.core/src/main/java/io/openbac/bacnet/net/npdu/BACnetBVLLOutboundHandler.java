@@ -21,18 +21,24 @@ public class BACnetBVLLOutboundHandler
 	private static final Logger LOG = LoggerFactory.getLogger(BACnetBVLLOutboundHandler.class);
 
 	@Override
-	protected void encode(ChannelHandlerContext ctx, DefaultAddressedEnvelope<BACnetNPDU, SocketAddress> msg, List<Object> out) throws Exception {
-		
+	protected void encode(ChannelHandlerContext ctx, DefaultAddressedEnvelope<BACnetNPDU, SocketAddress> msg,
+			List<Object> out) throws Exception {
+
 		LOG.debug("got an NPDU to send, creating BVLL");
 		LOG.debug(msg.toString());
-		BACnetBVLL bvll = new BACnetBVLL(FunctionType.ORIGINAL_BROADCAST_NPDU, msg.content());
+		BACnetNPDU npdu = msg.content();
+		BACnetBVLL bvll = null;
+		if (npdu.getDestinationSpecifier() == 1) { // TODO this implementation is not correct
+			bvll = new BACnetBVLL(FunctionType.ORIGINAL_BROADCAST_NPDU, npdu);
+		} else {
+			bvll = new BACnetBVLL(FunctionType.ORIGINAL_UNICAST_NPDU, npdu);
+		}
 		ByteBuf outBuf = Unpooled.buffer();
 		bvll.encode(outBuf);
 		DatagramPacket pkt = new DatagramPacket(outBuf, (InetSocketAddress) msg.recipient());
 		out.add(pkt);
-		
-		LOG.debug("done");
 
+		LOG.debug("done");
 
 	}
 

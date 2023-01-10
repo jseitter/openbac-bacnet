@@ -109,11 +109,12 @@ public final class HexUtils {
 	 *            Byte array representation
 	 */
 	public static String convert(byte bytes[]) {
-
+		
 		StringBuffer sb = new StringBuffer(bytes.length * 2);
 		for (int i = 0; i < bytes.length; i++) {
 			sb.append(convertDigit((int) (bytes[i] >> 4)));
 			sb.append(convertDigit((int) (bytes[i] & 0x0f)));
+			sb.append(" ");
 		}
 		return (sb.toString());
 

@@ -23,12 +23,12 @@ public final class BACnetNPDU {
 	 * Buffer containing higher level protocol parts
 	 */
 	private ByteBuf payload;
-	
+
 	/**
 	 * The BVLL object for this packet
 	 */
 	private BACnetBVLL bvll;
-	
+
 	public BACnetBVLL getBvll() {
 		return bvll;
 	}
@@ -38,13 +38,13 @@ public final class BACnetNPDU {
 	public BACnetNPDU(BACnetAPDU apdu) {
 		this.priority = 0;
 		this.expectingReply = false;
-		this.apdu=apdu;
+		this.apdu = apdu;
 	}
-
 
 	/**
 	 * get Buffer with higher level PDU
-	 * @return ByteBuf containing higher level PDU 
+	 * 
+	 * @return ByteBuf containing higher level PDU
 	 */
 	public ByteBuf getPayload() {
 		return payload;
@@ -82,16 +82,16 @@ public final class BACnetNPDU {
 	private final int priority;
 	private final boolean expectingReply;
 
-
 	/**
 	 * Parses the NPDU
+	 * 
 	 * @param rawNPDU
 	 * @throws BACnetParseException
 	 * @throws BACnetNetworkLayerMessageException
 	 */
 	protected BACnetNPDU(BACnetBVLL bvll) throws BACnetParseException, BACnetNetworkLayerMessageException {
-		
-		this.bvll = bvll; //store the bvll since it contains the sender address
+
+		this.bvll = bvll; // store the bvll since it contains the sender address
 		// get the Version field
 		ByteBuf rawNPDU = bvll.getPayload();
 		version = rawNPDU.readByte();
@@ -159,25 +159,24 @@ public final class BACnetNPDU {
 		LOG.debug("expecting reply: " + expectingReply);
 
 		// copy the unprocessed part of the datagram
-		payload = rawNPDU;//.slice();
+		payload = rawNPDU;// .slice();
 
 	}
 
-	
 	/**
 	 * semantic helper for message type
 	 */
 	public boolean hasBacnetAPDU() {
 		return (this.getMessageType() == 0);
 	}
-	
+
 	/**
 	 * semantic helper for message type
 	 */
 	public boolean hasBacnetNetworkLayerMessage() {
 		return (this.getMessageType() == 1);
 	}
-	
+
 	/**
 	 * 
 	 * @return 1 if it is a networkMessage, 0 if it is an APDU
@@ -219,20 +218,26 @@ public final class BACnetNPDU {
 		return (npciControlOctet & 0x0003);
 	}
 
-	public void encode(final ByteBuf buf) {	
+	public void encode(final ByteBuf buf) {
 		// bacnet protocol version
 		buf.writeByte(version);
-		// write NPCI
-		buf.writeByte(0x20);
-		//dnet
-		buf.writeShort(0xffff);
-		// dlen
-		buf.writeByte(0x00);
-		// hop count
-		buf.writeByte(0xff);
+
+		if (apdu.getPDUType() == BACnetAPDU.PDUType.UNCONFIRMED_REQUEST) {
+			// write NPCI
+			buf.writeByte(0x20);
+			// dnet
+			buf.writeShort(0xffff);
+			// dlen
+			buf.writeByte(0x00);
+			// hop count
+			buf.writeByte(0xff);
+		} else {
+			// NPCI=0
+			buf.writeByte(0x00);
+		}
 		// APDU
 		apdu.encode(buf);
-		
+
 	}
 
 }

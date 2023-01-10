@@ -1,5 +1,8 @@
 package io.openbac.bacnet.type;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.buffer.ByteBuf;
 
 /**
@@ -12,6 +15,8 @@ import io.netty.buffer.ByteBuf;
  */
 public abstract class BACnetEncodable {
 
+	protected final static Logger LOG = LoggerFactory.getLogger(BACnetEncodable.class);
+	
 	// Tag Structure
 	// 7 6 5 4 3 2 1 0
 	// |-----|-----|-----|-----|-----|-----|-----|-----|

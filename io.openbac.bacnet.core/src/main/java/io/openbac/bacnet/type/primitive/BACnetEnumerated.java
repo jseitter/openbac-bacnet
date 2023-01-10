@@ -17,6 +17,7 @@ public class BACnetEnumerated extends BACnetPrimitive {
 			throw new IllegalArgumentException("Value has to be unsigned!");
 		}
 		this.valueInteger = valueInteger;
+		this.length=getLength();
 	}
 
 	public BACnetEnumerated(final ByteBuf data) {
@@ -35,7 +36,7 @@ public class BACnetEnumerated extends BACnetPrimitive {
 		} else {
 			throw new IllegalArgumentException("Invalid unsigned integer data");
 		}
-
+		this.length=tagLVT;
 	}
 
 	public int intValue() {
@@ -45,10 +46,9 @@ public class BACnetEnumerated extends BACnetPrimitive {
 	@Override
 	public void encode(final ByteBuf buf, int contextId) {
 
-		// get needed length for the encoded value
-		int length = getLength();
-		TagUtils.encodeTagIdAndLength(buf, contextId, length);
-		switch (length) {
+
+		TagUtils.encodeTagIdAndLength(buf, contextId, (int)length);
+		switch ((int)length) {
 		case 1:
 			buf.writeByte((int) (valueInteger & 0xff));
 			break;
@@ -63,9 +63,9 @@ public class BACnetEnumerated extends BACnetPrimitive {
 
 	@Override
 	public void encodeApplication(ByteBuf data) {
-		int length = getLength();
-		TagUtils.encodeApplicationTagAndLength(data, BACnetPrimitive.Type.ENUMERATED.type, length);
-		switch (length) {
+
+		TagUtils.encodeApplicationTagAndLength(data, BACnetPrimitive.Type.ENUMERATED.type, (int)length);
+		switch ((int)length) {
 		case 1:
 			data.writeByte((int) (valueInteger & 0xff));
 			break;
