@@ -1,6 +1,5 @@
 	package io.openbac.bacnet.type;
 
-import java.io.InputStream;
 import java.util.HashMap;
 
 import org.junit.BeforeClass;
@@ -9,7 +8,6 @@ import org.junit.Test;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.openbac.bacnet.testutil.BACnetTest;
-import io.openbac.bacnet.testutil.TestDataLoader;
 import io.openbac.bacnet.type.enumerated.BACnetPropertyIdentifier;
 import io.openbac.util.HexUtils;
 
@@ -29,14 +27,14 @@ public class BACnetPropertyIdentifierTest extends BACnetTest {
 			ByteBuf buf = loader.resultBuffers.get(i);
 			HashMap<String, String> props = loader.resultProps.get(i);
 			//TODO fix this
-			//BACnetPropertyIdentifier bool = (BACnetBoolean) BACnetPrimitive.createPrimitive(BACnetEnumerated.class, buf);
+			//BACnetPropertyIdentifier bool = new(BACnetPropertyIdentifier(BACnetPrimitive.createPrimitive(BACnetEnumerated.class, buf));
 		}
 	}
 	
 	@Test
 	public void testEncode() {
 		
-		BACnetPropertyIdentifier id = BACnetPropertyIdentifier.PRESENT_VALUE;
+		BACnetPropertyIdentifier id = BACnetPropertyIdentifier.presentValue;
 		ByteBuf buffer = Unpooled.buffer();
 		id.encode(buffer, 3);
 		System.out.println(HexUtils.convert(buffer.array()));
