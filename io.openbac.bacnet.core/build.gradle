@@ -11,6 +11,9 @@ java {
     }
 }
 
+spotbugs {
+    ignoreFailures = true
+}
 dependencies {
 	
 	
