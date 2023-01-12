@@ -66,7 +66,7 @@ public abstract class BACnetUnconfirmedService {
 		return null;
 	}
 
-	public abstract byte getServiceChoice();
+	public abstract Choice getServiceChoice();
 	
 	public abstract void encode(final ByteBuf buf);
 

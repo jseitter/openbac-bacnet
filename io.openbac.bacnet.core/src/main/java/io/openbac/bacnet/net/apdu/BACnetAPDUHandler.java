@@ -11,14 +11,8 @@ import io.netty.channel.DefaultAddressedEnvelope;
 import io.openbac.api.device.BACnetLocalDevice;
 import io.openbac.bacnet.net.apdu.BACnetAPDU.PDUType;
 import io.openbac.bacnet.net.npdu.BACnetNPDU;
-import io.openbac.bacnet.type.BACnetAny;
-import io.openbac.bacnet.type.BACnetEncodable;
-import io.openbac.bacnet.type.BACnetSequenceOf;
-import io.openbac.bacnet.type.enumerated.BACnetPropertyIdentifier;
-import io.openbac.bacnet.type.primitive.BACnetObjectIdentifier;
 import io.openbac.service.confirmed.BACnetConfirmedService;
 import io.openbac.service.confirmed.BACnetReadPropertyService;
-import io.openbac.service.confirmed.BACnetReadPropertyService.ReadPropertyACK;
 import io.openbac.service.unconfirmed.BACnetIAmService;
 import io.openbac.service.unconfirmed.BACnetUnconfirmedService;
 import io.openbac.service.unconfirmed.BACnetWhoIsService;
@@ -64,7 +58,8 @@ public class BACnetAPDUHandler extends ChannelDuplexHandler {
 			switch (srv.getServiceChoice()) {
 			// TODO: solve this with the Choice enum
 			// WHO_IS
-			case 0x08: {
+
+			case WHO_IS: {
 				LOG.debug("handling WhoIs Service");
 				// TODO do we need to instantiate this at all ?
 				BACnetWhoIsService whois = (BACnetWhoIsService) srv;
@@ -90,10 +85,10 @@ public class BACnetAPDUHandler extends ChannelDuplexHandler {
 
 			switch (srv.getServiceChoice()) {
 
-			case 0x0C: {
+			case READ_PROPERTY: {
 				LOG.debug("handling ReadProperty Service");
 				BACnetReadPropertyService rp_srv = (BACnetReadPropertyService) srv;
-				BACnetAPDU result = handleReadPropertyService(rp_srv, c_apdu.getInvokeID());
+				BACnetAPDU result = srv.handleService(c_apdu.getInvokeID(), device);
 				ctx.writeAndFlush(new DefaultAddressedEnvelope<BACnetAPDU, SocketAddress>(result,
 						npdu.getBvll().getSourceAddress()));
 
@@ -101,43 +96,6 @@ public class BACnetAPDUHandler extends ChannelDuplexHandler {
 
 			}
 		}
-	}
-
-	private BACnetAPDU handleReadPropertyService(BACnetReadPropertyService srv, int invokeId) {
-
-		BACnetObjectIdentifier id = srv.getObjectIdentifier();
-		switch (id.getObjectType()) {
-
-		case DEVICE: {
-			BACnetPropertyIdentifier prop = srv.getPropertyIdentifier();
-			// prepare response
-			ReadPropertyACK result = new ReadPropertyACK();
-			result.setObjectIdentifier(id);
-			result.setPropertyIdentifier(prop);
-			// get result value
-			switch (prop.intValue()) {
-
-			case 76: { // object list
-
-				BACnetSequenceOf<BACnetObjectIdentifier> res = device.getDeviceObject().getObjectList();
-				BACnetAny<BACnetEncodable> any = new BACnetAny<BACnetEncodable>(res);
-				result.setPropertyValue(any);
-				break;
-			}
-			}
-
-			// encapsulate in ComplexAck
-			BACnetComplexAckAPDU ack = BACnetComplexAckAPDU.createFor(result, invokeId);
-			return ack;
-
-		}
-
-		default: {
-			// create error
-		}
-
-		}
-		return null;
 	}
 
 }

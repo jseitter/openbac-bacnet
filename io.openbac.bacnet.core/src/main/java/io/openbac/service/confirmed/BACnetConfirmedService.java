@@ -1,7 +1,9 @@
 package io.openbac.service.confirmed;
 
 import io.netty.buffer.ByteBuf;
+import io.openbac.api.device.BACnetLocalDevice;
 import io.openbac.bacnet.exceptions.BACnetParseException;
+import io.openbac.bacnet.net.apdu.BACnetAPDU;
 
 public abstract class BACnetConfirmedService {
 
@@ -52,5 +54,13 @@ public abstract class BACnetConfirmedService {
 		return null;
 	}
 
-	public abstract byte getServiceChoice();
+	public abstract Choice getServiceChoice();
+	
+	/**
+	 * handles the service for the given invokeId and uses the given Device
+	 * @param invokeId
+	 * @param device
+	 * @return
+	 */
+	public abstract BACnetAPDU handleService(int invokeId, BACnetLocalDevice device);
 }

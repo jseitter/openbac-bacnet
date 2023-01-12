@@ -18,8 +18,8 @@ public class BACnetTimeSynchronizationService extends BACnetUnconfirmedService {
 	BACnetTime time;
 
 	@Override
-	public byte getServiceChoice() {
-		return BACnetUnconfirmedService.Choice.TIME_SYNCHRONISATION.serviceChoice;
+	public Choice getServiceChoice() {
+		return BACnetUnconfirmedService.Choice.TIME_SYNCHRONISATION;
 	}
 	
 	public BACnetTimeSynchronizationService(BACnetDate date, BACnetTime time) {

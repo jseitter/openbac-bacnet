@@ -27,8 +27,8 @@ public class BACnetWhoIsService extends BACnetUnconfirmedService {
 	private BACnetUnsignedInteger deviceInstanceRangeHighLimit = null;
 
 	@Override
-	public byte getServiceChoice() {
-		return BACnetUnconfirmedService.Choice.WHO_IS.serviceChoice;
+	public Choice getServiceChoice() {
+		return BACnetUnconfirmedService.Choice.WHO_IS;
 	}
 	
 	/**

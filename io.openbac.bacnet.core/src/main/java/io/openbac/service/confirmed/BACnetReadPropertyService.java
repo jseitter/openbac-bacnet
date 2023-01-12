@@ -1,11 +1,13 @@
 package io.openbac.service.confirmed;
 
-import java.nio.ByteBuffer;
-
 import io.netty.buffer.ByteBuf;
+import io.openbac.api.device.BACnetLocalDevice;
 import io.openbac.bacnet.exceptions.BACnetParseException;
+import io.openbac.bacnet.net.apdu.BACnetAPDU;
+import io.openbac.bacnet.net.apdu.BACnetComplexAckAPDU;
 import io.openbac.bacnet.type.BACnetAny;
 import io.openbac.bacnet.type.BACnetEncodable;
+import io.openbac.bacnet.type.BACnetSequenceOf;
 import io.openbac.bacnet.type.enumerated.BACnetPropertyIdentifier;
 import io.openbac.bacnet.type.primitive.BACnetEnumerated;
 import io.openbac.bacnet.type.primitive.BACnetObjectIdentifier;
@@ -28,15 +30,15 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 	 * the response handling
 	 */
 	private ReadPropertyACK response;
-	public static final byte serviceChoice = BACnetConfirmedService.Choice.READ_PROPERTY.serviceChoice;
+	//public static final byte serviceChoice = BACnetConfirmedService.Choice.READ_PROPERTY.serviceChoice;
 
 	public BACnetReadPropertyService(ByteBuf apdu) throws BACnetParseException {
 		request = new ReadPropertyRequest(apdu);
 	}
 
 	// TODO needed ?
-	public byte getServiceChoice() {
-		return serviceChoice;
+	public Choice getServiceChoice() {
+		return BACnetConfirmedService.Choice.READ_PROPERTY;
 	}
 
 	/**
@@ -58,6 +60,51 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 
 	}
 
+	public BACnetAPDU handleService(int invokeId, BACnetLocalDevice device) {
+
+		BACnetObjectIdentifier id = this.getObjectIdentifier();
+		switch (id.getObjectType()) {
+
+		case DEVICE: {
+			BACnetPropertyIdentifier prop = this.getPropertyIdentifier();
+			// prepare response
+			ReadPropertyACK result = new ReadPropertyACK();
+			result.setObjectIdentifier(id);
+			result.setPropertyIdentifier(prop);
+			// get result value
+			switch (prop.intValue()) {
+
+			case 76: { // object list
+
+				BACnetSequenceOf<BACnetObjectIdentifier> res = device.getDeviceObject().getObjectList();
+				BACnetAny<BACnetEncodable> any = new BACnetAny<BACnetEncodable>(res);
+				result.setPropertyValue(any);
+				break;
+			}
+			
+			default: {
+				// if we reach default the requested Property is not supported and we have to handle this
+				//TODO: handle the error
+			}
+			}
+
+			// encapsulate in ComplexAck
+			BACnetComplexAckAPDU ack = BACnetComplexAckAPDU.createFor(result, invokeId);
+			return ack;
+
+		}
+
+		default: {
+			//BACNet
+			// create error
+		}
+
+		}
+		return null;
+	}
+	
+	
+	
 	/**
 	 * Request for ReadProperty
 	 * 
@@ -86,7 +133,7 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 			// TODO: handle optional field
 
 		}
-
+		
 		// default ctor
 		public ReadPropertyRequest() {
 

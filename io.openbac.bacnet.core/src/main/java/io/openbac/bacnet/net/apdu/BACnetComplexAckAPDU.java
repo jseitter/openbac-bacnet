@@ -1,6 +1,7 @@
 package io.openbac.bacnet.net.apdu;
 
 import io.netty.buffer.ByteBuf;
+import io.openbac.service.confirmed.BACnetConfirmedService;
 import io.openbac.service.confirmed.BACnetConfirmedService.BACnetResponse;
 import io.openbac.service.confirmed.BACnetReadPropertyService;
 import io.openbac.service.confirmed.BACnetReadPropertyService.ReadPropertyACK;
@@ -56,7 +57,7 @@ public class BACnetComplexAckAPDU extends BACnetAPDU {
 		ack.segementedMessage = false;
 		ack.moreFollows = false;
 		ack.invokeId = invokeId;
-		ack.serviceAckChoice = BACnetReadPropertyService.serviceChoice;
+		ack.serviceAckChoice = BACnetConfirmedService.Choice.READ_PROPERTY.serviceChoice;
 
 		return ack;
 	}

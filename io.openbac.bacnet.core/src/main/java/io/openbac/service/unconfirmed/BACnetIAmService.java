@@ -23,8 +23,8 @@ public class BACnetIAmService extends BACnetUnconfirmedService{
 	private BACnetUnsignedInteger vendorID;
 
 	@Override
-	public byte getServiceChoice() {
-		return BACnetUnconfirmedService.Choice.I_AM.serviceChoice;
+	public Choice getServiceChoice() {
+		return BACnetUnconfirmedService.Choice.I_AM;
 	}
 	
 	/**
