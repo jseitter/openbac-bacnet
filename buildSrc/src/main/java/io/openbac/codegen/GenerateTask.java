@@ -10,6 +10,7 @@ import org.gradle.api.tasks.TaskAction;
 import org.jdom2.JDOMException;
 
 import io.openbac.codegen.generators.EnumeratedGenerator;
+import io.openbac.codegen.generators.ObjectGenerator;
 
 public abstract class GenerateTask extends DefaultTask {
 
@@ -25,8 +26,8 @@ public abstract class GenerateTask extends DefaultTask {
     public void runGenerator() throws JDOMException, IOException {
 		System.out.println("Yeahh running the generator");
 		
-		
-		EnumeratedGenerator.doGenerate(new File(this.getProject().getProjectDir(),"src/model/enums.xml"), new File(getGeneratorOutput().get(),"io/openbac/bacnet/type/enumerated"));
+		EnumeratedGenerator.doGenerate(new File(this.getProject().getProjectDir(),"src/model/enums.xml"), getGeneratorOutput().get());
+		ObjectGenerator.doGenerate(new File(this.getProject().getProjectDir(),"src/model/objects.xml"), getGeneratorOutput().get());
 	
 	}
 	
