@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bacnetObjectClasses>
+	<objectClass name="BACnetAnalogInputObject">
+		<property name="objectIdentifier" datatype="BACnetObjectIdentifier" />
+		<property name="objectName" datatype="BACnetCharacterString" />
+		<property name="objectType" datatype="BACnetObjectType" />
+		<property name="presentValue" datatype="BACnetReal" />
+		<property name="description" datatype="BACnetCharacterString" optional="true" />
+		<property name="deviceType" datatype="BACnetCharacterString" optional="true" />
+		<property name="statusFlags" datatype="BACnetStatusFlags" />
+		<property name="eventState" datatype="BACnetEventState" />
+		<property name="outOfService" datatype="BACnetBoolean" />
+		<property name="units" datatype="BACnetEngineeringUnits" />
+	</objectClass>
+
+	<objectClass name="BACnetAnalogOutputObject">
+		<property name="objectIdentifier" datatype="BACnetObjectIdentifier" />
+		<property name="objectName" datatype="BACnetCharacterString" />
+		<property name="objectType" datatype="BACnetObjectType" />
+		<property name="presentValue" datatype="BACnetReal" />
+		<property name="description" datatype="BACnetCharacterString" optional="true" />
+		<property name="deviceType" datatype="BACnetCharacterString" optional="true" />
+		<property name="statusFlags" datatype="BACnetStatusFlags" />
+		<property name="eventState" datatype="BACnetEventState" />
+		<property name="outOfService" datatype="BACnetBoolean" />
+		<property name="units" datatype="BACnetEngineeringUnits" />
+		<property name="priorityArray" datatype="BACnetPriorityArray" />
+		<property name="relinquishDefault" datatype="BACnetReal" />
+	</objectClass>
+
+	<objectClass name="BACnetAnalogValueObject">
+		<property name="objectIdentifier" datatype="BACnetObjectIdentifier" />
+		<property name="objectName" datatype="BACnetCharacterString" />
+		<property name="objectType" datatype="BACnetObjectType" />
+		<property name="presentValue" datatype="BACnetReal" />
+		<property name="description" datatype="BACnetCharacterString" optional="true" />
+		<property name="statusFlags" datatype="BACnetStatusFlags" />
+		<property name="eventState" datatype="BACnetEventState" />
+		<property name="outOfService" datatype="BACnetBoolean" />
+		<property name="units" datatype="BACnetEngineeringUnits" />
+	</objectClass>
+
+	<objectClass name="BACnetBinaryOutputObject">
+		<property name="objectIdentifier" datatype="BACnetObjectIdentifier" />
+		<property name="objectName" datatype="BACnetCharacterString" />
+		<property name="objectType" datatype="BACnetObjectType" />
+		<property name="presentValue" datatype="BACnetBinaryPV" />
+		<property name="description" datatype="BACnetCharacterString" optional="true" />
+		<property name="deviceType" datatype="BACnetCharacterString" optional="true" />
+		<property name="statusFlags" datatype="BACnetStatusFlags" />
+		<property name="eventState" datatype="BACnetEventState" />
+		<property name="outOfService" datatype="BACnetBoolean" />
+		<property name="polarity" datatype="BACnetPolarity" />
+		<property name="inactiveText" datatype="BACnetCharacterString" />
+		<property name="activeText" datatype="BACnetCharacterString" />
+	</objectClass>
+
+	<objectClass name="BACnetBinaryValueObject">
+		<property name="objectIdentifier" datatype="BACnetObjectIdentifier" />
+		<property name="objectName" datatype="BACnetCharacterString" />
+		<property name="objectType" datatype="BACnetObjectType" />
+		<property name="presentValue" datatype="BACnetBinaryPV" />
+		<property name="description" datatype="BACnetCharacterString" optional="true" />
+		<property name="statusFlags" datatype="BACnetStatusFlags" />
+		<property name="eventState" datatype="BACnetEventState" />
+		<property name="outOfService" datatype="BACnetBoolean" />
+		<property name="inactiveText" datatype="BACnetCharacterString" />
+		<property name="activeText" datatype="BACnetCharacterString" />
+	</objectClass>
+
+	<objectClass name="BACnetCalendarObject">
+		<property name="objectIdentifier" datatype="BACnetObjectIdentifier" />
+		<property name="objectName" datatype="BACnetCharacterString" />
+		<property name="objectType" datatype="BACnetObjectType" />
+		<property name="description" datatype="BACnetCharacterString" optional="true" />
+		<property name="presentValue" datatype="BACnetBoolean" />
+		<property name="dateList" datatype="List&lt;BACnetCalendarEntry&gt;" />
+		<property name="profileName" datatype="BACnetCharacterString" />
+	</objectClass>
+
+	<objectClass name="BACnetScheduleObject">
+		<property name="objectIdentifier" datatype="BACnetObjectIdentifier" />
+		<property name="objectName" datatype="BACnetCharacterString" />
+		<property name="objectType" datatype="BACnetObjectType" />
+		<property name="description" datatype="BACnetCharacterString" optional="true" />
+		<property name="presentValue" datatype="BACnetAny" />
+		<property name="effectivePeriod" datatype="BACnetDateRange" />
+	<!-- 	<property name="weeklySchedule" datatype="" /> 
+		<property name="exceptionSchedule" datatype="" />  -->
+        <property name="scheduleDefault" datatype="BACnetAny" />
+
+		
+	</objectClass>
+
+</bacnetObjectClasses>

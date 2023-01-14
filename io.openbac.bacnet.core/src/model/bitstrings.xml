@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BACnetBitStrings>
+	<bitStringClass name="BACnetStatusFlags">
+		<bitString name="inAlarm" bitNr="0" />
+		<bitString name="fault" bitNr="1" />
+		<bitString name="overrriden" bitNr="2" />
+		<bitString name="outOfService" bitNr="3" />
+	</bitStringClass>
+</BACnetBitStrings>
