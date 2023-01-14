@@ -8,7 +8,7 @@ package io.openbac.bacnet.type.primitive;
 import java.nio.ByteBuffer;
 
 import io.netty.buffer.ByteBuf;
-import io.openbac.bacnet.object.BACnetObjectType.ObjectType;
+import io.openbac.bacnet.type.enumerated.BACnetObjectType;
 import io.openbac.util.HexUtils;
 import io.openbac.util.TagUtils;
 
@@ -19,16 +19,17 @@ import io.openbac.util.TagUtils;
  */
 public class BACnetObjectIdentifier extends BACnetPrimitive {
 
-	private ObjectType objectType; // 10 bit Object Type
+	private BACnetObjectType objectType; // 10 bit Object Type
 	private Integer instance; // 22 bit instance ID
 
 	public BACnetObjectIdentifier(final int objectType, final int instance) {
 
-		this(ObjectType.getObjectType(objectType), instance);
+		
+		//this(ObjectType.getObjectType(objectType), instance);
 
 	}
 
-	public BACnetObjectIdentifier(final ObjectType objectType, final int instance) {
+	public BACnetObjectIdentifier(final BACnetObjectType objectType, final int instance) {
 
 		this.objectType = objectType;
 		this.instance = instance;
@@ -58,7 +59,7 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
 		s1 = (short) (s1 << 2);
 		s1 |= t2;
 		int objType = s1;
-		this.objectType = ObjectType.getObjectType(objType);
+		this.objectType = new BACnetObjectType(objType);
 
 		byte[] arr = new byte[4];
 		arr[0] = 0;
@@ -80,7 +81,7 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
 		TagUtils.encodeTagIdAndLength(buf, contextId, 4);
 
 		byte[] result = new byte[4];
-		int objType = objectType.getObjectType();
+		int objType = objectType.intValue();
 
 		result[3] = (byte) (instance & 0x000000ff);
 		result[2] = (byte) ((instance & 0x0000ff00) >> 8);
@@ -97,7 +98,7 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
 		TagUtils.encodeApplicationTagAndLength(data, BACnetPrimitive.Type.BACNET_OBJECT_IDENTIFIER.type, 4);
 
 		byte[] result = new byte[4];
-		int objType = objectType.getObjectType();
+		int objType = objectType.intValue();
 
 		result[3] = (byte) (instance & 0x000000ff);
 		result[2] = (byte) ((instance & 0x0000ff00) >> 8);
@@ -118,27 +119,27 @@ public class BACnetObjectIdentifier extends BACnetPrimitive {
 	 * @return the objectType
 	 */
 	public int getObjectTypeInt() {
-		return objectType.getObjectType();
+		return objectType.intValue();
 	}
 
 	/**
 	 * @param objectType the objectType to set
 	 */
 	public void setObjectType(int objectType) {
-		this.objectType = ObjectType.getObjectType(objectType);
+		this.objectType = new BACnetObjectType(objectType);
 	}
 
 	/**
 	 * @return the objectType
 	 */
-	public ObjectType getObjectType() {
+	public BACnetObjectType getObjectType() {
 		return objectType;
 	}
 
 	/**
 	 * @param objectType the objectType to set
 	 */
-	public void setObjectType(ObjectType objectType) {
+	public void setObjectType(BACnetObjectType objectType) {
 		this.objectType = objectType;
 	}
 
