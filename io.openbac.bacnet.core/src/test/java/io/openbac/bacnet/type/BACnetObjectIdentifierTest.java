@@ -47,7 +47,7 @@ public class BACnetObjectIdentifierTest extends BACnetTest {
 			BACnetObjectIdentifier obj = BACnetPrimitive.createPrimitive(BACnetObjectIdentifier.class, buf);
 
 			System.out.println(obj.toDebugString());
-			System.out.println("type: " + obj.getObjectType().name());
+			System.out.println("type: " + obj.getObjectType().toDebugString());
 			System.out.println("instance: " + obj.getInstance());
 
 			

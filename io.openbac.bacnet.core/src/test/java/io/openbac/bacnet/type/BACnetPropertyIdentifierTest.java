@@ -34,7 +34,7 @@ public class BACnetPropertyIdentifierTest extends BACnetTest {
 	@Test
 	public void testEncode() {
 		
-		BACnetPropertyIdentifier id = BACnetPropertyIdentifier.presentValue;
+		BACnetPropertyIdentifier id = BACnetPropertyIdentifier.presentValueObj;
 		ByteBuf buffer = Unpooled.buffer();
 		id.encode(buffer, 3);
 		System.out.println(HexUtils.convert(buffer.array()));
