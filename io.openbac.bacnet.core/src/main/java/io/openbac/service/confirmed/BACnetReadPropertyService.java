@@ -8,6 +8,7 @@ import io.openbac.bacnet.net.apdu.BACnetComplexAckAPDU;
 import io.openbac.bacnet.type.BACnetAny;
 import io.openbac.bacnet.type.BACnetEncodable;
 import io.openbac.bacnet.type.BACnetSequenceOf;
+import io.openbac.bacnet.type.enumerated.BACnetObjectType;
 import io.openbac.bacnet.type.enumerated.BACnetPropertyIdentifier;
 import io.openbac.bacnet.type.primitive.BACnetEnumerated;
 import io.openbac.bacnet.type.primitive.BACnetObjectIdentifier;
@@ -30,7 +31,8 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 	 * the response handling
 	 */
 	private ReadPropertyACK response;
-	//public static final byte serviceChoice = BACnetConfirmedService.Choice.READ_PROPERTY.serviceChoice;
+	// public static final byte serviceChoice =
+	// BACnetConfirmedService.Choice.READ_PROPERTY.serviceChoice;
 
 	public BACnetReadPropertyService(ByteBuf apdu) throws BACnetParseException {
 		request = new ReadPropertyRequest(apdu);
@@ -63,9 +65,9 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 	public BACnetAPDU handleService(int invokeId, BACnetLocalDevice device) {
 
 		BACnetObjectIdentifier id = this.getObjectIdentifier();
-		switch (id.getObjectType()) {
+		switch (id.getObjectType().intValue()) {
 
-		case DEVICE: {
+		case BACnetObjectType.DEVICE: {
 			BACnetPropertyIdentifier prop = this.getPropertyIdentifier();
 			// prepare response
 			ReadPropertyACK result = new ReadPropertyACK();
@@ -74,18 +76,19 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 			// get result value
 			switch (prop.intValue()) {
 
-			case 76: { // object list
-
+			case BACnetPropertyIdentifier.OBJECTLIST: { // object list
 				BACnetSequenceOf<BACnetObjectIdentifier> res = device.getDeviceObject().getObjectList();
 				BACnetAny<BACnetEncodable> any = new BACnetAny<BACnetEncodable>(res);
 				result.setPropertyValue(any);
 				break;
 			}
-			
+
 			default: {
-				// if we reach default the requested Property is not supported and we have to handle this
-				//TODO: handle the error
+				// if we reach default the requested Property is not supported and we have to
+				// handle this
+				// TODO: handle the error
 			}
+
 			}
 
 			// encapsulate in ComplexAck
@@ -95,16 +98,14 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 		}
 
 		default: {
-			//BACNet
+			// BACNet
 			// create error
 		}
 
 		}
 		return null;
 	}
-	
-	
-	
+
 	/**
 	 * Request for ReadProperty
 	 * 
@@ -133,7 +134,7 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 			// TODO: handle optional field
 
 		}
-		
+
 		// default ctor
 		public ReadPropertyRequest() {
 
@@ -186,13 +187,13 @@ public class BACnetReadPropertyService extends BACnetConfirmedService {
 	 */
 	public static class ReadPropertyACK implements BACnetConfirmedService.BACnetResponse {
 		// ctx 0
-		private BACnetObjectIdentifier objectIdentifier; 
-		 // ctx 1
+		private BACnetObjectIdentifier objectIdentifier;
+		// ctx 1
 		private BACnetPropertyIdentifier propertyIdentifier;
 		// ctx 2 optional
-		private BACnetUnsignedInteger propertyArrayIndex; 
+		private BACnetUnsignedInteger propertyArrayIndex;
 		// ctx 3
-		private BACnetAny<? extends BACnetEncodable> propertyValue; 
+		private BACnetAny<? extends BACnetEncodable> propertyValue;
 
 		public BACnetObjectIdentifier getObjectIdentifier() {
 			return objectIdentifier;
