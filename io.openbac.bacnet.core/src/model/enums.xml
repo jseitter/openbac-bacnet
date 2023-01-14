@@ -1,8 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bacnetEnumeratedClasses>
-	<enumeratedClass name="BACnetPropertyIdentifier">
+	<enumeratedClass name="BACnetPropertyIdentifier" createEnum="true">
 		<enumerationEntry name="objectList" value="76" />
 		<enumerationEntry name="presentValue" value="85" />
+		<enumerationEntry name="description" value="28" />
+		<enumerationEntry name="objectName" value="77" />
+
+	</enumeratedClass>
+	<enumeratedClass name="BACnetEngineeringUnitzs" createEnum="true">
+		<enumerationEntry name="metersPerSecondPerSecond" value="166" />
+		<enumerationEntry name="squareMeters" value="0" />
+		<enumerationEntry name="squareCentimeters" value="116" />
+		<enumerationEntry name="squareFeet" value="1" />
+		<enumerationEntry name="squareInches" value="115" />
+		<enumerationEntry name="currency1" value="105" />
+		<enumerationEntry name="currency2" value="106" />
+		<enumerationEntry name="currency3" value="107" />
+		<enumerationEntry name="currency4" value="108" />
+		<enumerationEntry name="currency5" value="109" />
+		<enumerationEntry name="currency6" value="110" />
+		<enumerationEntry name="currency7" value="111" />
+		<enumerationEntry name="currency8" value="112" />
+		<enumerationEntry name="currency9" value="113" />
+		<enumerationEntry name="currency10" value="114" />
+		<enumerationEntry name="milliAmperes" value="2" />
+		<enumerationEntry name="Amperes" value="3" />
+
+
+	</enumeratedClass>
+	<enumeratedClass name="BACnetObjectType">
+		<enumerationEntry name="analogInput" value="0" />
+		<enumerationEntry name="analogOutput" value="1" />
+		<enumerationEntry name="analogValue" value="2" />
+		<enumerationEntry name="binaryInput" value="3" />
+		<enumerationEntry name="binaryOutput" value="4" />
+		<enumerationEntry name="binaryValue" value="5" />
+		<enumerationEntry name="calendar" value="6" />
+		<enumerationEntry name="command" value="7" />
+		<enumerationEntry name="device" value="8" />
+		<enumerationEntry name="eventEnrollment" value="9" />
+		<enumerationEntry name="file" value="10" />
+		<enumerationEntry name="group" value="11" />
+		<enumerationEntry name="loop" value="12" />
+		<enumerationEntry name="multiStateInput" value="13" />
+		<enumerationEntry name="multiStateOutput" value="14" />
+		<enumerationEntry name="notificationClass" value="15" />
+		<enumerationEntry name="program" value="16" />
+		<enumerationEntry name="schedule" value="17" />
+		<enumerationEntry name="multiStateValue" value="19" />
+		<enumerationEntry name="trendLog" value="20" />
+		<enumerationEntry name="accumulator" value="23" />
+		<enumerationEntry name="pulseConverter" value="24" />
+		<enumerationEntry name="eventLog" value="25" />
+		<enumerationEntry name="trendLogMultiple" value="27" />
+		<enumerationEntry name="loadControl" value="28" />
+		<enumerationEntry name="structuredView" value="29" />
+		<enumerationEntry name="accessDoor" value="30" />
 	</enumeratedClass>
 	<enumeratedClass name="BACnetAbortReason">
 		<enumerationEntry name="other" value="0" />
@@ -122,5 +175,47 @@
 		<enumerationEntry name="verification" value="5" />
 		<enumerationEntry name="authorizationDelay" value="6" />
 	</enumeratedClass>
-
+	<enumeratedClass name="BACnetEventState">
+		<enumerationEntry name="normal" value="0" />
+		<enumerationEntry name="fault" value="1" />
+		<enumerationEntry name="offNormal" value="2" />
+		<enumerationEntry name="highLimit" value="3" />
+		<enumerationEntry name="lowLimit" value="4" />
+		<enumerationEntry name="lifeSafetyAlarm" value="5" />
+	</enumeratedClass>
+	<enumeratedClass name="BACnetLoggingType">
+		<enumerationEntry name="polled" value="0" />
+		<enumerationEntry name="cov" value="1" />
+		<enumerationEntry name="triggered" value="2" />
+	</enumeratedClass>
+	<enumeratedClass name="BACnetNodeType">
+		<enumerationEntry name="unknown" value="0" />
+		<enumerationEntry name="system" value="1" />
+		<enumerationEntry name="network" value="2" />
+		<enumerationEntry name="device" value="3" />
+		<enumerationEntry name="organizational" value="4" />
+		<enumerationEntry name="area" value="5" />
+		<enumerationEntry name="equipment" value="6" />
+		<enumerationEntry name="point" value="7" />
+		<enumerationEntry name="collection" value="8" />
+		<enumerationEntry name="property" value="9" />
+		<enumerationEntry name="functional" value="10" />
+		<enumerationEntry name="other" value="11" />
+	</enumeratedClass>
+	<enumeratedClass name="BACnetNotifyType">
+		<enumerationEntry name="alarm" value="0" />
+		<enumerationEntry name="event" value="1" />
+		<enumerationEntry name="ackNotification" value="2" />
+	</enumeratedClass>
+	<enumeratedClass name="BACnetPolarity">
+		<enumerationEntry name="normal" value="0" />
+		<enumerationEntry name="reverse" value="1" />
+	</enumeratedClass>
+	<enumeratedClass name="BACnetProgramError">
+		<enumerationEntry name="normal" value="0" />
+		<enumerationEntry name="loadFailed" value="1" />
+		<enumerationEntry name="internal" value="2" />
+		<enumerationEntry name="program" value="3" />
+		<enumerationEntry name="other" value="4" />
+	</enumeratedClass>
 </bacnetEnumeratedClasses>
