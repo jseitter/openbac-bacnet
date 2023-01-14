@@ -1,8 +1,8 @@
 package io.openbac.bacnet.object;
 
-import io.openbac.bacnet.object.BACnetObjectType.ObjectType;
 import io.openbac.bacnet.type.BACnetSequenceOf;
 import io.openbac.bacnet.type.enumerated.BACnetDeviceStatus;
+import io.openbac.bacnet.type.enumerated.BACnetObjectType;
 import io.openbac.bacnet.type.enumerated.BACnetServicesSupported;
 import io.openbac.bacnet.type.primitive.BACnetBitString;
 import io.openbac.bacnet.type.primitive.BACnetCharacterString;
@@ -18,10 +18,10 @@ public class BACnetDeviceObject {
 
 	//hardcoded supported services (see below)
 	private BACnetServicesSupported.Service[] supportedServices = {BACnetServicesSupported.Service.who_is,BACnetServicesSupported.Service.i_am};	
-	private BACnetObjectIdentifier objectIdentifier=new BACnetObjectIdentifier(BACnetObjectType.ObjectType.DEVICE, 3330);
+	private BACnetObjectIdentifier objectIdentifier=new BACnetObjectIdentifier(BACnetObjectType.DEVICE, 3330);
 	private BACnetCharacterString objectName=new BACnetCharacterString("TestDevice");
-	private BACnetObjectType.ObjectType objectType = BACnetObjectType.ObjectType.DEVICE;
-	private BACnetDeviceStatus systemStatus = BACnetDeviceStatus.operational;
+	private BACnetObjectType objectType = BACnetObjectType.deviceObj;
+	private BACnetDeviceStatus systemStatus = BACnetDeviceStatus.operationalObj;
 	private BACnetCharacterString vendorName=new BACnetCharacterString("openbac.io");
 	private BACnetUnsignedInteger vendorIdentifier=new BACnetUnsignedInteger(911); // Is this correct Unsigned16
 	private BACnetCharacterString modelName = new BACnetCharacterString("openBAC");
@@ -49,10 +49,10 @@ public class BACnetDeviceObject {
 	public BACnetDeviceObject() {
 		//TODO: sample init for testing
 		
-		objectList.add(new BACnetObjectIdentifier(ObjectType.DEVICE, 3330));
+		objectList.add(new BACnetObjectIdentifier(BACnetObjectType.DEVICE, 3330));
 //		objectList.add(new BACnetObjectIdentifier(ObjectType.ANALOG_INPUT, 1000));
 //		objectList.add(new BACnetObjectIdentifier(ObjectType.ANALOG_OUTPUT, 11000));
-		objectList.add(new BACnetObjectIdentifier(ObjectType.ANALOG_VALUE, 2));
+		objectList.add(new BACnetObjectIdentifier(BACnetObjectType.ANALOGVALUE, 2));
 
 //		objectList.add(new BACnetObjectIdentifier(ObjectType.BINARY_INPUT, 90000));
 //		objectList.add(new BACnetObjectIdentifier(ObjectType.BINARY_OUTPUT, 12000));
@@ -76,7 +76,7 @@ public class BACnetDeviceObject {
 	}
 
 
-	public BACnetObjectType.ObjectType getObjectType() {
+	public BACnetObjectType getObjectType() {
 		return objectType;
 	}
 
