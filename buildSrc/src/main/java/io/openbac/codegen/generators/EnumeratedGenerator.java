@@ -1,22 +1,30 @@
 package io.openbac.codegen.generators;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.lang.model.element.Modifier;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
-import org.jdom2.Element;
-import org.jdom2.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.TypeSpec.Builder;
 
 /**
  * @author TBreckle
@@ -24,15 +32,17 @@ import org.jdom2.Document;
  */
 public class EnumeratedGenerator {
 
+	private static final Logger LOG = LoggerFactory.getLogger(EnumeratedGenerator.class);
+
 	public static String VERSION = "0.1";
 
-	public static void doGenerate(File xmlSource, File outputPackage) throws JDOMException, IOException {
-		EnumeratedGenerator.processXmlFileToClassFiles(xmlSource, outputPackage);
+	public static void doGenerate(File xmlSource, File outFolder) throws JDOMException, IOException {
+		EnumeratedGenerator.processXmlFileToClassFiles(xmlSource, outFolder);
 	}
 
-	public static void processXmlFileToClassFiles(File xmlFilename, File path) throws JDOMException, IOException {
+	public static void processXmlFileToClassFiles(File xmlFilename, File outFolder) throws JDOMException, IOException {
 
-		path.mkdirs();
+		outFolder.mkdirs();
 		final SAXBuilder sax = new SAXBuilder();
 		final Document doc = sax.build(xmlFilename);
 
@@ -43,10 +53,10 @@ public class EnumeratedGenerator {
 
 			if (enumeratedClass.hasAttributes()) {
 
-				final Map<String, Integer> enumerationMap = new HashMap<>();
-				final String name = enumeratedClass.getAttributeValue("name");
-				final String classFilename = new File(path, name + ".java").getAbsolutePath();
-				System.out.println("processing " + name + " to " + classFilename);
+				Map<String, Integer> enumerationMap = new HashMap<>();
+				String name = enumeratedClass.getAttributeValue("name");
+				// String classFilename = new File(path, name + ".java").getAbsolutePath();
+				LOG.info("processing " + name);
 
 				if (name != null) {
 
@@ -63,7 +73,7 @@ public class EnumeratedGenerator {
 
 							if (entryName != null) {
 								enumerationMap.put(entryName, entryValue);
-								System.out.println("\tcreate entry: " + entryName + " with index " + entryValue);
+								LOG.info("\tcreate entry: " + entryName + " with index " + entryValue);
 							}
 
 						}
@@ -72,32 +82,79 @@ public class EnumeratedGenerator {
 
 				}
 
-				System.out.println("\tgenerate class");
-				final String clazz = EnumeratedGenerator.createEnumeratedClass(name, enumerationMap);
+				LOG.info("\tgenerate class");
+				final TypeSpec clazz = EnumeratedGenerator.createEnumeratedClass(name, enumerationMap);
 
-				System.out.println("\twrite class to file");
-				Writer writer = null;
-				try {
-					writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(classFilename), "utf-8"));
-					writer.write(clazz);
-					System.out.println("\tdone");
-				} catch (final IOException ex) {
-					throw ex;
-				} finally {
-					if (writer != null) {
-						try {
-							writer.close();
-						} catch (final IOException ex) {
-						}
-					}
-				}
+				LOG.info("\twrite class to file");
+				JavaFile javaFile = JavaFile.builder("io.openbac.bacnet.type.enumerated", clazz).build();
+				javaFile.writeTo(outFolder);
+
+//				Writer writer = null;
+//				try {
+//					writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(classFilename), "utf-8"));
+//					writer.write(clazz);
+//					LOG.info("\tdone");
+//				} catch (final IOException ex) {
+//					throw ex;
+//				} finally {
+//					if (writer != null) {
+//						try {
+//							writer.close();
+//						} catch (final IOException ex) {
+//						}
+//					}
+//				}
 			}
 
 		}
 
 	}
 
-	public static String createEnumeratedClass(String enumeratedName, Map<String, Integer> states) {
+	public static TypeSpec createEnumeratedClass(String enumeratedName, Map<String, Integer> states) {
+
+
+		
+		// create the class
+		Builder classBuilder = TypeSpec.classBuilder(enumeratedName).addModifiers(Modifier.PUBLIC);
+
+		// create the Type of the just generated class for self Reference purpos
+		ClassName genType = ClassName.get("io.openbac.bacnet.type.enumerated", enumeratedName);
+		
+		// let it inherit BACnetEnumerated
+		ClassName bacnetEnumerated = ClassName.get("io.openbac.bacnet.type.primitive", "BACnetEnumerated");
+		classBuilder.superclass(bacnetEnumerated);
+
+		// create int constructor
+		MethodSpec ctr = MethodSpec.constructorBuilder().addParameter(TypeName.INT, "id").addStatement("super(id)")
+				.addModifiers(Modifier.PUBLIC).build();
+		classBuilder.addMethod(ctr);
+		
+		// create Enum constructor
+		MethodSpec ctrEnum = MethodSpec.constructorBuilder().addParameter(bacnetEnumerated, "enumerated").addStatement("super(enumerated)")
+				.addModifiers(Modifier.PUBLIC).build();
+		classBuilder.addMethod(ctrEnum);
+
+		// iterate the enums
+		for (final Map.Entry<String, Integer> entry : states.entrySet()) {
+			// add a constant with the enum value
+			classBuilder
+					.addField(
+							FieldSpec
+									.builder(TypeName.INT, entry.getKey().toUpperCase(), Modifier.PUBLIC,
+											Modifier.STATIC, Modifier.FINAL)
+									.initializer(entry.getValue().toString()).build());
+
+			// add another constant with the initialized enum object
+			classBuilder.addField(FieldSpec
+					.builder(genType, entry.getKey() + "Obj", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+					.initializer("new $T(" + entry.getValue().toString() + ")",genType).build());
+
+		}
+
+		return classBuilder.build();
+	}
+
+	public static String createEnumeratedClassOLD(String enumeratedName, Map<String, Integer> states) {
 
 		final StringBuilder sb = new StringBuilder();
 		sb.append("package io.openbac.bacnet.type.enumerated;").append(System.lineSeparator())
