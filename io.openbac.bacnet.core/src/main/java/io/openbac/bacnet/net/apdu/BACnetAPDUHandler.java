@@ -56,9 +56,6 @@ public class BACnetAPDUHandler extends ChannelDuplexHandler {
 			BACnetUnconfirmedService srv = uc_apdu.getService();
 
 			switch (srv.getServiceChoice()) {
-			// TODO: solve this with the Choice enum
-			// WHO_IS
-
 			case WHO_IS: {
 				LOG.debug("handling WhoIs Service");
 				// TODO do we need to instantiate this at all ?
