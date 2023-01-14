@@ -9,6 +9,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 import org.jdom2.JDOMException;
 
+import io.openbac.codegen.generators.BitstringGenerator;
 import io.openbac.codegen.generators.EnumeratedGenerator;
 import io.openbac.codegen.generators.ObjectGenerator;
 
@@ -24,11 +25,10 @@ public abstract class GenerateTask extends DefaultTask {
 	
 	@TaskAction
     public void runGenerator() throws JDOMException, IOException {
-		System.out.println("Yeahh running the generator");
-		
 		EnumeratedGenerator.doGenerate(new File(this.getProject().getProjectDir(),"src/model/enums.xml"), getGeneratorOutput().get());
 		ObjectGenerator.doGenerate(new File(this.getProject().getProjectDir(),"src/model/objects.xml"), getGeneratorOutput().get());
-	
+		BitstringGenerator.doGenerate(new File(this.getProject().getProjectDir(),"src/model/bitstrings.xml"), getGeneratorOutput().get());
+		
 	}
 	
 	
