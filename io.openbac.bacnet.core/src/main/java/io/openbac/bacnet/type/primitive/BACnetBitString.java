@@ -6,9 +6,8 @@
 package io.openbac.bacnet.type.primitive;
 
 import java.util.Arrays;
-import java.util.BitSet;
 
-import org.apache.commons.lang3.BitField;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.NotImplementedException;
 
 import io.netty.buffer.ByteBuf;
@@ -108,6 +107,26 @@ public class BACnetBitString extends BACnetPrimitive {
 	public void encode(ByteBuf buf, int contextId) {
 		throw new NotImplementedException("This is not implemented, yet");
 
+	}
+	
+	public void setBit(int bitOffset) {
+		//check if array is too small
+		if(value.length <= bitOffset) {
+			throw new NotImplementedException("This is not implemented, yet");
+		}
+		value[bitOffset]=true;
+	}
+	public void clearBit(int bitOffset) {
+		//check if array is too small
+		if(value.length <= bitOffset) {
+			throw new NotImplementedException("This is not implemented, yet");
+		}
+		value[bitOffset]=false;
+	}
+	
+	public boolean getBit(int bitOffset) {
+		
+		return value[bitOffset];
 	}
 
 }
