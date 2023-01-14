@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.openbac.bacnet.object.BACnetDeviceObject;
+import io.openbac.bacnet.object.BACnetObject;
+import io.openbac.bacnet.type.primitive.BACnetObjectIdentifier;
 
 public class BACnetLocalDevice {
 
@@ -20,6 +22,12 @@ public class BACnetLocalDevice {
     private final BACnetDeviceObject deviceObject = new BACnetDeviceObject();
 
     /**
+     * The map of objects of this device
+     */
+    private final HashMap<BACnetObjectIdentifier, BACnetObject> objectMap = new HashMap<>();
+    
+    
+    /**
      * The list of known remote devices 
      * 
      */
@@ -31,4 +39,13 @@ public class BACnetLocalDevice {
 	}
 
 
+	public void addObject(Integer instanceNr, BACnetObject object) {
+		
+		
+		
+	
+		BACnetObjectIdentifier id = new BACnetObjectIdentifier(null, instanceNr);
+		objectMap.put(id, object);
+	}
+	
 }
