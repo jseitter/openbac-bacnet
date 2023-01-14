@@ -38,7 +38,7 @@ a lot of enumerations which are generated of the model and are subclasses of the
 
 BACnetPrimitive serves as an intermediate to provide a factory for Primitive Datatypes
 ```mermaid
-
+classDiagram
 BACnetEncodeable <|-- BACnetPrimitive
 BACnetEncodeable <|-- BACnetAny
 BACnetPrimitive <|-- BACnetBoolean
