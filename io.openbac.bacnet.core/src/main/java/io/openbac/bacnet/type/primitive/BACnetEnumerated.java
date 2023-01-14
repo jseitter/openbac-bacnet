@@ -20,6 +20,11 @@ public class BACnetEnumerated extends BACnetPrimitive {
 		this.length=getLength();
 	}
 
+	public BACnetEnumerated(BACnetEnumerated enumerated) {
+		this.valueInteger=enumerated.valueInteger;
+		this.length=enumerated.length;
+		
+	}
 	public BACnetEnumerated(final ByteBuf data) {
 		buf = data;
 		decodeTag();
